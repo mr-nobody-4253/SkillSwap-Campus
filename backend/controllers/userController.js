@@ -62,6 +62,98 @@ const loginUser = (req, res) => {
     });
 };
 
+const getProfile = (req, res) => {
+
+    const userId = req.user.id;
+
+    const query = `
+        SELECT
+            id,
+            name,
+            email,
+            department,
+            semester,
+            bio,
+            profile_picture,
+            created_at
+        FROM users
+        WHERE id = ?
+    `;
+
+    db.query(query, [userId], (err, result) => {
+
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                message: "Database Error"
+            });
+        }
+
+        if (result.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found!"
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: result[0]
+        });
+
+    });
+};
+
+const updateProfile = (req, res) => {
+
+    const userId = req.user.id;
+
+    const {
+        name,
+        department,
+        semester,
+        bio,
+        profile_picture
+    } = req.body;
+
+    const query = `
+        UPDATE users
+        SET
+            name = ?,
+            department = ?,
+            semester = ?,
+            bio = ?,
+            profile_picture = ?
+        WHERE id = ?
+    `;
+
+    db.query(
+        query,
+        [
+            name,
+            department,
+            semester,
+            bio,
+            profile_picture,
+            userId
+        ],
+        (err, result) => {
+
+            if (err) {
+                return res.status(500).json({
+                    success: false,
+                    message: "Failed to update profile"
+                });
+            }
+
+            res.status(200).json({
+                success: true,
+                message: "Profile Updated Successfully!"
+            });
+        }
+    );
+};
+
 const registerUser = async (req, res) => {
     try {
 
@@ -130,5 +222,7 @@ const registerUser = async (req, res) => {
 
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    getProfile,
+    updateProfile
 };
