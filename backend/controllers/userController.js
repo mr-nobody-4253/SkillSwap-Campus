@@ -27,6 +27,7 @@ const loginUser = (req, res) => {
         }
 
         const user = result[0];
+        console.log(user);
 
         // Compare Password
         const isMatch = await bcrypt.compare(
@@ -45,11 +46,12 @@ const loginUser = (req, res) => {
         const token = jwt.sign(
             {
                 id: user.id,
+                name: user.name,
                 email: user.email
             },
             process.env.JWT_SECRET,
             {
-                expiresIn: "1d"
+                expiresIn: "7d"
             }
         );
 

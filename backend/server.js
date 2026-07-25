@@ -7,6 +7,8 @@ const exchangeRoutes = require("./routes/exchangeRoutes");
 
 const messageRoutes = require("./routes/messageRoutes");
 
+const notificationRoutes = require("./routes/notificationRoutes");
+
 console.log(process.env.JWT_SECRET);
 
 const db = require("./config/db");
@@ -22,7 +24,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/skills", skillRoutes);
 app.use("/api/exchange", exchangeRoutes);
 app.use("/api/messages", messageRoutes);
-
+app.use("/api/notifications", notificationRoutes);
 app.get("/", (req, res) => {
     res.send("SkillSwap Campus Server is Running!");
 });

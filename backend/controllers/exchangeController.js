@@ -38,9 +38,49 @@ const sendRequest = (req, res) => {
                 });
             }
 
+            // Get sender name from database
+            const getNameQuery = `
+                SELECT name
+                FROM users
+                WHERE id = ?
+            `;
+
+            db.query(
+                getNameQuery,
+                [senderId],
+                (err, userResult) => {
+
+                    if (!err && userResult.length > 0) {
+
+                        const senderName =
+                            userResult[0].name;
+
+                        const notificationQuery = `
+                            INSERT INTO notifications
+                            (
+                                user_id,
+                                title,
+                                message
+                            )
+                            VALUES (?, ?, ?)
+                        `;
+
+                        db.query(
+                            notificationQuery,
+                            [
+                                receiver_id,
+                                "New Exchange Request",
+                                `${senderName} sent you an exchange request.`
+                            ]
+                        );
+                    }
+                }
+            );
+
             res.status(201).json({
                 success: true,
-                message: "Exchange Request Sent Successfully!"
+                message:
+                    "Exchange Request Sent Successfully!"
             });
 
         }
