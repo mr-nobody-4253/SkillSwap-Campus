@@ -194,6 +194,51 @@ const acceptRequest = (req, res) => {
                 });
             }
 
+            const getUserQuery = `
+    SELECT
+        users.name,
+        exchange_requests.sender_id
+    FROM exchange_requests
+    JOIN users
+    ON users.id = ?
+    WHERE exchange_requests.id = ?
+`;
+
+db.query(
+    getUserQuery,
+    [userId, requestId],
+    (err, result) => {
+
+        if (!err && result.length > 0) {
+
+            const receiverName =
+                result[0].name;
+
+            const senderId =
+                result[0].sender_id;
+
+            const notificationQuery = `
+                INSERT INTO notifications
+                (
+                    user_id,
+                    title,
+                    message
+                )
+                VALUES (?, ?, ?)
+            `;
+
+            db.query(
+                notificationQuery,
+                [
+                    senderId,
+                    "Request Accepted",
+                    `${receiverName} accepted your exchange request.`
+                ]
+            );
+        }
+    }
+);
+
             res.status(200).json({
                 success: true,
                 message: "Request Accepted Successfully!"
@@ -234,6 +279,39 @@ const rejectRequest = (req, res) => {
                         "Request not found or unauthorized"
                 });
             }
+
+            const getUserQuery = `
+    SELECT
+        users.name,
+        exchange_requests.sender_id
+    FROM exchange_requests
+    JOIN users
+    ON users.id = ?
+    WHERE exchange_requests.id = ?
+`;
+
+db.query(
+    getUserQuery,
+    [userId, requestId],
+    (err, result) => {
+
+        if (!err && result.length > 0) {
+
+            db.query(
+                `
+                INSERT INTO notifications
+                (user_id, title, message)
+                VALUES (?, ?, ?)
+                `,
+                [
+                    result[0].sender_id,
+                    "Request Rejected",
+                    `${result[0].name} rejected your exchange request.`
+                ]
+            );
+        }
+    }
+);
 
             res.status(200).json({
                 success: true,
@@ -279,6 +357,58 @@ const completeExchange = (req, res) => {
                         "Exchange not found or not accepted yet"
                 });
             }
+
+            const query2 = `
+    SELECT sender_id, receiver_id
+    FROM exchange_requests
+    WHERE id = ?
+`;
+
+db.query(
+    query2,
+    [requestId],
+    (err, result) => {
+
+        if (!err && result.length > 0) {
+
+            const otherUserId =
+                result[0].sender_id === userId
+                    ? result[0].receiver_id
+                    : result[0].sender_id;
+
+            db.query(
+                `
+                SELECT name
+                FROM users
+                WHERE id = ?
+                `,
+                [userId],
+                (err, user) => {
+
+                    if (!err && user.length > 0) {
+
+                        db.query(
+                            `
+                            INSERT INTO notifications
+                            (
+                                user_id,
+                                title,
+                                message
+                            )
+                            VALUES (?, ?, ?)
+                            `,
+                            [
+                                otherUserId,
+                                "Exchange Completed",
+                                `${user[0].name} marked the exchange as completed.`
+                            ]
+                        );
+                    }
+                }
+            );
+        }
+    }
+);
 
             res.status(200).json({
                 success: true,

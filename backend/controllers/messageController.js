@@ -32,6 +32,37 @@ const sendMessage = (req, res) => {
                 });
             }
 
+            db.query(
+    `
+    SELECT name
+    FROM users
+    WHERE id = ?
+    `,
+    [senderId],
+    (err, user) => {
+
+        if (!err && user.length > 0) {
+
+            db.query(
+                `
+                INSERT INTO notifications
+                (
+                    user_id,
+                    title,
+                    message
+                )
+                VALUES (?, ?, ?)
+                `,
+                [
+                    receiver_id,
+                    "New Message",
+                    `${user[0].name} sent you a message.`
+                ]
+            );
+        }
+    }
+);
+
             res.status(201).json({
                 success: true,
                 message: "Message Sent Successfully!"
