@@ -55,11 +55,20 @@ const loginUser = (req, res) => {
             }
         );
 
-        res.status(200).json({
-            success: true,
-            message: "Login Successful!",
-            token
-        });
+       res.status(200).json({
+    success: true,
+    message: "Login Successful!",
+    token,
+
+    user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        department: user.department,
+        semester: user.semester,
+        profile_picture: user.profile_picture
+    }
+});
 
     });
 };
@@ -204,10 +213,16 @@ const registerUser = async (req, res) => {
                         });
                     }
 
-                    res.status(201).json({
-                        success: true,
-                        message: "User Registered Successfully!"
-                    });
+                    res.status(200).json({
+    success: true,
+    message: "Login Successful!",
+    token,
+    user: {
+        id: user.id,
+        name: user.name,
+        email: user.email
+    }
+});
                 }
             );
         });

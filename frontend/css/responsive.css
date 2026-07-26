@@ -1,0 +1,15 @@
+@media(max-width:992px){
+
+    .login-page{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .login-left{
+
+        display:none;
+
+    }
+
+}

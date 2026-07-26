@@ -1,0 +1,49 @@
+/* ===========================
+   SkillSwap Campus Design System
+=========================== */
+
+:root{
+
+    /* Fonts */
+    --font-family:'Poppins',sans-serif;
+
+    /* Primary Colors */
+    --primary:#14B8A6;
+    --primary-hover:#0F766E;
+
+    /* Status Colors */
+    --success:#22C55E;
+    --danger:#EF4444;
+    --warning:#F59E0B;
+    --info:#3B82F6;
+
+    /* Light Theme */
+    --background:#F5F7FA;
+    --card:#FFFFFF;
+    --border:#E5E7EB;
+
+    --text:#111827;
+    --text-light:#6B7280;
+
+    /* Shadow */
+
+    --shadow-sm:
+    0 4px 12px rgba(0,0,0,.05);
+
+    --shadow-md:
+    0 10px 25px rgba(0,0,0,.08);
+
+    --shadow-lg:
+    0 20px 45px rgba(0,0,0,.12);
+
+    /* Radius */
+
+    --radius-sm:8px;
+    --radius-md:16px;
+    --radius-lg:24px;
+
+    /* Transition */
+
+    --transition:.3s ease;
+
+}
