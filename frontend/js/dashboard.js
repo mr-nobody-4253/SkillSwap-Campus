@@ -316,3 +316,75 @@ async function loadRecentNotifications() {
 }
 
 loadRecentNotifications();
+
+async function loadDropdownNotifications() {
+
+    const token =
+        localStorage.getItem(
+            "token"
+        );
+
+    try {
+
+        const response =
+            await fetch(
+                "http://127.0.0.1:5000/api/notifications",
+                {
+                    headers: {
+                        Authorization:
+                            `Bearer ${token}`
+                    }
+                }
+            );
+
+        const data =
+            await response.json();
+
+        const container =
+            document.getElementById(
+                "notificationContainer"
+            );
+
+        container.innerHTML = "";
+
+        if (
+            !data.data ||
+            data.data.length === 0
+        ) {
+
+            container.innerHTML =
+                `
+                <div class="notification-item">
+                    No notifications found.
+                </div>
+                `;
+
+            return;
+        }
+
+        data.data
+            .slice(0, 3)
+            .forEach(
+                (notification) => {
+
+                    container.innerHTML += `
+                        <div class="notification-item">
+                            ${notification.message}
+                        </div>
+                    `;
+
+                }
+            );
+
+    } catch (error) {
+
+        console.log(
+            "Dropdown Notification Error:",
+            error
+        );
+
+    }
+
+}
+
+loadDropdownNotifications();
