@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Dashboard | SkillSwap Campus</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <main class="dashboard-layout">
+      <!-- SIDEBAR -->
+
+      <aside class="sidebar">
+        <div>
+          <div class="sidebar-logo">
+            <h2>SkillSwap</h2>
+            <p>Campus</p>
+          </div>
+
+          <ul class="sidebar-menu">
+            <li class="active">🏠 Dashboard</li>
+            <li>👤 Profile</li>
+            <li>🎯 My Skills</li>
+            <li>🔄 Requests</li>
+            <li>💬 Messages</li>
+            <li>🔔 Notifications</li>
+            <li>📜 History</li>
+            <li>⚙️ Settings</li>
+          </ul>
+        </div>
+
+        <button class="logout-btn" id="logoutBtn">Logout</button>
+      </aside>
+
+      <!-- MAIN CONTENT -->
+
+      <div class="main-content">
+        <nav class="navbar">
+          <div class="logo">
+            <h2>SkillSwap</h2>
+          </div>
+
+          <div class="nav-right">
+            <input
+              type="text"
+              placeholder="Search Skills..."
+              class="search-input"
+            />
+
+            <div class="notification-wrapper">
+              <button class="icon-btn" id="notificationBtn">🔔</button>
+
+              <div class="notification-dropdown" id="notificationDropdown">
+                <h4>Notifications</h4>
+
+                <div class="notification-item">
+                  Nishat sent an exchange request.
+                </div>
+
+                <div class="notification-item">
+                  Rahim accepted your request.
+                </div>
+
+                <div class="notification-item">
+                  Exchange completed successfully.
+                </div>
+              </div>
+            </div>
+
+            <button class="icon-btn" id="themeToggle">🌙</button>
+
+            <div class="profile-box">
+              <span id="username"> Prince </span>
+
+              <div class="avatar">P</div>
+            </div>
+          </div>
+        </nav>
+
+        <section class="welcome-section">
+          <h1>
+            Good Evening,
+
+            <span id="welcomeName"> Prince </span>
+
+            👋
+          </h1>
+
+          <p>Ready to exchange new skills today?</p>
+        </section>
+
+        <section class="stats-grid">
+          <div class="stat-card">
+            <h2 id="incomingCount">0</h2>
+            <p>Incoming Requests</p>
+          </div>
+
+          <div class="stat-card">
+            <h2 id="sentCount">0</h2>
+            <p>Sent Requests</p>
+          </div>
+
+          <div class="stat-card">
+            <h2 id="acceptedCount">0</h2>
+            <p>Accepted</p>
+          </div>
+
+          <div class="stat-card">
+            <h2 id="completedCount">0</h2>
+            <p>Completed</p>
+          </div>
+        </section>
+        <section class="recent-notifications">
+          <div class="section-header">
+            <h2>Recent Notifications</h2>
+
+            <span> View All </span>
+          </div>
+
+          <div id="recentNotifications">
+            <div class="notification-card">Loading notifications...</div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <script src="js/dashboard.js"></script>
+  </body>
+</html>
