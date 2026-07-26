@@ -860,3 +860,75 @@ textarea{
     color: white;
 
 }
+
+.recent-messages{
+
+    margin-top: 30px;
+
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 10px 30px rgba(
+            0,0,0,.05
+        );
+
+}
+
+.message-card{
+
+    padding: 15px;
+
+    border-radius: 12px;
+
+    background: #f5f7fa;
+
+    margin-bottom: 12px;
+
+    transition: .3s;
+
+}
+
+.message-card:hover{
+
+    transform:
+        translateX(5px);
+
+}
+
+.message-name{
+
+    font-weight: bold;
+
+    margin-bottom: 5px;
+
+}
+
+.message-text{
+
+    color: gray;
+
+}
+
+.dark-mode .recent-messages{
+
+    background: #1e1e1e;
+
+    color: white;
+
+}
+
+.dark-mode .message-card{
+
+    background: #2a2a2a;
+
+}
+
+.dark-mode .message-text{
+
+    color: #cccccc;
+
+}
