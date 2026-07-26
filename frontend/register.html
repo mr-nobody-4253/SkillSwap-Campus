@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register | SkillSwap Campus</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <main class="login-page">
+
+        <section class="login-left">
+
+            <div class="branding">
+
+                <div class="logo-box">
+
+                    <h1>SkillSwap</h1>
+                    <span>Campus</span>
+
+                </div>
+
+                <h2>
+                    Teach What You Know.
+                    <br>
+                    Learn What You Love.
+                </h2>
+
+                <p>
+                    Join hundreds of students and start exchanging skills,
+                    building friendships, and growing together.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section class="login-right">
+
+            <div class="login-card register-card">
+
+                <h2>Create Account 🚀</h2>
+
+                <p class="login-subtitle">
+                    Join SkillSwap Campus today.
+                </p>
+
+                <form id="registerForm">
+
+                    <div class="input-group">
+                        <label>Name</label>
+                        <input type="text" id="name" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Password</label>
+
+                        <div class="password-box">
+
+                            <input
+                                type="password"
+                                id="password"
+                                required>
+
+                            <button
+                                type="button"
+                                class="eye-btn"
+                                id="togglePassword">
+
+                                👁
+
+                            </button>
+
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Department</label>
+                        <input type="text" id="department" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Semester</label>
+                        <input type="text" id="semester" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Bio</label>
+
+                        <textarea
+                            id="bio"
+                            rows="3">
+                        </textarea>
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="login-btn">
+
+                        Create Account
+
+                    </button>
+
+                </form>
+
+                <div class="register-link">
+
+                    Already have an account?
+
+                    <a href="login.html">
+
+                        Login
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/register.js"></script>
+
+</body>
+
+</html>

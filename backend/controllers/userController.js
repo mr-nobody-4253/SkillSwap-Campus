@@ -212,16 +212,9 @@ const registerUser = async (req, res) => {
                             error: err
                         });
                     }
-
-                    res.status(200).json({
+res.status(201).json({
     success: true,
-    message: "Login Successful!",
-    token,
-    user: {
-        id: user.id,
-        name: user.name,
-        email: user.email
-    }
+    message: "Registration Successful!"
 });
                 }
             );

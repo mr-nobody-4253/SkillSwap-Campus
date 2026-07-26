@@ -337,3 +337,29 @@ input{
     font-weight:600;
 
 }
+
+.register-card{
+
+    max-width:500px;
+
+    max-height:85vh;
+
+    overflow-y:auto;
+
+}
+
+textarea{
+
+    width:100%;
+
+    padding:16px;
+
+    border:1px solid var(--border);
+
+    border-radius:12px;
+
+    resize:none;
+
+    font-family:"Poppins",sans-serif;
+
+}
