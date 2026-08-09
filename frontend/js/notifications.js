@@ -3,229 +3,164 @@
 // NOTIFICATIONS.JS
 // =====================================================
 
-const API_BASE =
-    "http://127.0.0.1:5000/api";
-
+const API_BASE = "http://127.0.0.1:5000/api";
 
 // =====================================================
 // PAGE LOAD
 // =====================================================
 
-document.addEventListener(
-    "DOMContentLoaded",
-    initializeNotifications
-);
-
+document.addEventListener("DOMContentLoaded", initializeNotifications);
 
 // =====================================================
 // INITIALIZE
 // =====================================================
 
 async function initializeNotifications() {
+  const token = localStorage.getItem("token");
 
-    const token =
-        localStorage.getItem("token");
+  if (!token) {
+    window.location.href = "login.html";
 
+    return;
+  }
 
-    if (!token) {
+  loadUserInfo();
 
-        window.location.href =
-            "login.html";
+  setupLogout();
 
-        return;
+  setupTheme();
 
-    }
+  setupSearch();
 
+  setupMarkAllRead();
 
-    loadUserInfo();
-
-    setupLogout();
-
-    setupTheme();
-
-    setupSearch();
-
-    setupMarkAllRead();
-
-
-    await loadNotifications();
-
+  await loadNotifications();
 }
-
 
 // =====================================================
 // TOKEN
 // =====================================================
 
 function getToken() {
-
-    return localStorage.getItem("token");
-
+  return localStorage.getItem("token");
 }
-
 
 // =====================================================
 // API REQUEST
 // =====================================================
 
-async function apiRequest(endpoint) {
+async function apiRequest(endpoint, options = {}) {
+  const token = getToken();
 
-    const token =
-        getToken();
+  if (!token) {
+    window.location.href = "login.html";
 
+    return null;
+  }
 
-    if (!token) {
+  try {
+    const response = await fetch(`${API_BASE}${endpoint}`, {
+      ...options,
 
-        window.location.href =
-            "login.html";
+      headers: {
+        ...(options.headers || {}),
 
-        return null;
+        "Content-Type": "application/json",
 
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    // =================================================
+    // SESSION EXPIRED
+    // =================================================
+
+    if (response.status === 401) {
+      localStorage.removeItem("token");
+
+      alert("Session expired. Please login again.");
+
+      window.location.href = "login.html";
+
+      return null;
     }
 
+    // =================================================
+    // RESPONSE
+    // =================================================
 
-    try {
+    const contentType = response.headers.get("content-type");
 
-        const response =
-            await fetch(
-                `${API_BASE}${endpoint}`,
-                {
-                    headers: {
+    if (contentType && contentType.includes("application/json")) {
+      const data = await response.json();
 
-                        Authorization:
-                            `Bearer ${token}`
+      if (!response.ok) {
+        console.error("API Error:", data);
+      }
 
-                    }
-                }
-            );
-
-
-        if (
-            response.status === 401
-        ) {
-
-            localStorage.removeItem(
-                "token"
-            );
-
-            window.location.href =
-                "login.html";
-
-            return null;
-
-        }
-
-
-        const data =
-            await response.json();
-
-
-        return data;
-
-    }
-    catch (error) {
-
-        console.error(
-            "Notification API Error:",
-            error
-        );
-
-        return null;
-
+      return data;
     }
 
+    console.error("Invalid server response.");
+
+    return {
+      success: false,
+
+      message: "Invalid server response.",
+    };
+  } catch (error) {
+    console.error("Notification API Error:", error);
+
+    return {
+      success: false,
+
+      message: "Server connection failed.",
+    };
+  }
 }
-
 
 // =====================================================
 // USER INFO
 // =====================================================
 
 function loadUserInfo() {
+  const token = getToken();
 
-    const token =
-        getToken();
+  if (!token) return;
 
+  try {
+    const payload = JSON.parse(
+      atob(token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")),
+    );
 
-    if (!token) return;
+    const name = payload.name || "User";
 
+    const username = document.getElementById("username");
 
-    try {
+    const avatar = document.getElementById("userAvatar");
 
-        const payload =
-            JSON.parse(
-                atob(
-                    token
-                        .split(".")[1]
-                        .replace(/-/g, "+")
-                        .replace(/_/g, "/")
-                )
-            );
-
-
-        const name =
-            payload.name ||
-            "User";
-
-
-        const username =
-            document.getElementById(
-                "username"
-            );
-
-
-        const avatar =
-            document.getElementById(
-                "userAvatar"
-            );
-
-
-        if (username) {
-
-            username.textContent =
-                name;
-
-        }
-
-
-        if (avatar) {
-
-            avatar.textContent =
-                name
-                    .charAt(0)
-                    .toUpperCase();
-
-        }
-
-    }
-    catch (error) {
-
-        console.error(
-            "User info error:",
-            error
-        );
-
+    if (username) {
+      username.textContent = name;
     }
 
+    if (avatar) {
+      avatar.textContent = name.charAt(0).toUpperCase();
+    }
+  } catch (error) {
+    console.error("User info error:", error);
+  }
 }
-
 
 // =====================================================
 // LOAD NOTIFICATIONS
 // =====================================================
 
 async function loadNotifications() {
+  const container = document.getElementById("notificationsContainer");
 
-    const container =
-        document.getElementById(
-            "notificationsContainer"
-        );
+  if (!container) return;
 
-
-    if (!container) return;
-
-
-    container.innerHTML = `
+  container.innerHTML = `
 
         <div class="notification-loading">
 
@@ -235,434 +170,32 @@ async function loadNotifications() {
 
     `;
 
+  const data = await apiRequest("/notifications");
 
-    /*
-        We use existing exchange requests
-        as notification sources.
-    */
+  if (!data || !data.success) {
+    showNotificationError(data?.message || "Failed to load notifications.");
 
+    return;
+  }
 
-    const incoming =
-        await apiRequest(
-            "/exchange/incoming"
-        );
+  const notifications = Array.isArray(data.data) ? data.data : [];
 
+  updateStats(notifications);
 
-    const sent =
-        await apiRequest(
-            "/exchange/sent"
-        );
-
-
-    const incomingData =
-        incoming?.success
-            ? incoming.data || []
-            : [];
-
-
-    const sentData =
-        sent?.success
-            ? sent.data || []
-            : [];
-
-
-    const notifications = [];
-
-
-    // =================================================
-    // INCOMING REQUESTS
-    // =================================================
-
-    incomingData.forEach(
-        function (request) {
-
-            notifications.push({
-
-                type:
-                    getNotificationType(
-                        request.status,
-                        "incoming"
-                    ),
-
-                icon:
-                    getNotificationIcon(
-                        request.status,
-                        "incoming"
-                    ),
-
-                title:
-                    getNotificationTitle(
-                        request.status,
-                        "incoming"
-                    ),
-
-                message:
-                    getIncomingMessage(
-                        request
-                    ),
-
-                date:
-                    request.created_at,
-
-                status:
-                    request.status
-
-            });
-
-        }
-    );
-
-
-    // =================================================
-    // SENT REQUESTS
-    // =================================================
-
-    sentData.forEach(
-        function (request) {
-
-            notifications.push({
-
-                type:
-                    getNotificationType(
-                        request.status,
-                        "sent"
-                    ),
-
-                icon:
-                    getNotificationIcon(
-                        request.status,
-                        "sent"
-                    ),
-
-                title:
-                    getNotificationTitle(
-                        request.status,
-                        "sent"
-                    ),
-
-                message:
-                    getSentMessage(
-                        request
-                    ),
-
-                date:
-                    request.created_at,
-
-                status:
-                    request.status
-
-            });
-
-        }
-    );
-
-
-    // newest first
-
-    notifications.sort(
-        function (a, b) {
-
-            return (
-                new Date(b.date) -
-                new Date(a.date)
-            );
-
-        }
-    );
-
-
-    updateStats(
-        notifications
-    );
-
-
-    renderNotifications(
-        notifications
-    );
-
+  renderNotifications(notifications);
 }
 
-
 // =====================================================
-// NOTIFICATION TYPE
-// =====================================================
-
-function getNotificationType(
-    status,
-    direction
-) {
-
-    if (status === "Accepted") {
-
-        return "accepted";
-
-    }
-
-
-    if (status === "Rejected") {
-
-        return "rejected";
-
-    }
-
-
-    if (status === "Completed") {
-
-        return "completed";
-
-    }
-
-
-    return "request";
-
-}
-
-
-// =====================================================
-// ICON
+// RENDER NOTIFICATIONS
 // =====================================================
 
-function getNotificationIcon(
-    status,
-    direction
-) {
+function renderNotifications(notifications) {
+  const container = document.getElementById("notificationsContainer");
 
-    if (status === "Accepted") {
+  if (!container) return;
 
-        return "✅";
-
-    }
-
-
-    if (status === "Rejected") {
-
-        return "❌";
-
-    }
-
-
-    if (status === "Completed") {
-
-        return "🎉";
-
-    }
-
-
-    return direction === "incoming"
-        ? "📩"
-        : "📤";
-
-}
-
-
-// =====================================================
-// TITLE
-// =====================================================
-
-function getNotificationTitle(
-    status,
-    direction
-) {
-
-    if (status === "Accepted") {
-
-        return "Exchange Request Accepted";
-
-    }
-
-
-    if (status === "Rejected") {
-
-        return "Exchange Request Rejected";
-
-    }
-
-
-    if (status === "Completed") {
-
-        return "Exchange Completed";
-
-    }
-
-
-    if (direction === "incoming") {
-
-        return "New Exchange Request";
-
-    }
-
-
-    return "Exchange Request Sent";
-
-}
-
-
-// =====================================================
-// INCOMING MESSAGE
-// =====================================================
-
-function getIncomingMessage(
-    request
-) {
-
-    const name =
-        request.name ||
-        "Someone";
-
-
-    if (
-        request.status ===
-        "Accepted"
-    ) {
-
-        return `
-            ${escapeHTML(name)}
-            accepted your exchange request.
-            They offered
-            <strong>
-                ${escapeHTML(
-                    request.skill_offered
-                )}
-            </strong>.
-        `;
-
-    }
-
-
-    if (
-        request.status ===
-        "Rejected"
-    ) {
-
-        return `
-            ${escapeHTML(name)}
-            rejected your exchange request.
-        `;
-
-    }
-
-
-    if (
-        request.status ===
-        "Completed"
-    ) {
-
-        return `
-            Your exchange with
-            ${escapeHTML(name)}
-            has been completed.
-        `;
-
-    }
-
-
-    return `
-        ${escapeHTML(name)}
-        sent you an exchange request.
-        They offer
-        <strong>
-            ${escapeHTML(
-                request.skill_offered
-            )}
-        </strong>
-        and want
-        <strong>
-            ${escapeHTML(
-                request.skill_requested
-            )}
-        </strong>.
-    `;
-
-}
-
-
-// =====================================================
-// SENT MESSAGE
-// =====================================================
-
-function getSentMessage(
-    request
-) {
-
-    const name =
-        request.name ||
-        "User";
-
-
-    if (
-        request.status ===
-        "Accepted"
-    ) {
-
-        return `
-            Your exchange request to
-            ${escapeHTML(name)}
-            was accepted.
-        `;
-
-    }
-
-
-    if (
-        request.status ===
-        "Rejected"
-    ) {
-
-        return `
-            Your exchange request to
-            ${escapeHTML(name)}
-            was rejected.
-        `;
-
-    }
-
-
-    if (
-        request.status ===
-        "Completed"
-    ) {
-
-        return `
-            Your exchange with
-            ${escapeHTML(name)}
-            has been completed successfully.
-        `;
-
-    }
-
-
-    return `
-        Your exchange request to
-        ${escapeHTML(name)}
-        is currently pending.
-    `;
-
-}
-
-
-// =====================================================
-// RENDER
-// =====================================================
-
-function renderNotifications(
-    notifications
-) {
-
-    const container =
-        document.getElementById(
-            "notificationsContainer"
-        );
-
-
-    if (!container) return;
-
-
-    if (
-        notifications.length ===
-        0
-    ) {
-
-        container.innerHTML = `
+  if (notifications.length === 0) {
+    container.innerHTML = `
 
             <div class="notification-empty">
 
@@ -682,494 +215,419 @@ function renderNotifications(
 
         `;
 
-        return;
+    return;
+  }
 
-    }
+  container.innerHTML = notifications
+    .map(function (notification) {
+      return createNotificationCard(notification);
+    })
+    .join("");
 
-
-    container.innerHTML =
-        notifications
-            .map(
-                function (
-                    notification,
-                    index
-                ) {
-
-                    return `
-
-                        <div
-                            class="notification-card unread"
-                            data-index="${index}"
-                        >
-
-                            <div
-                                class="notification-icon ${notification.type}"
-                            >
-
-                                ${notification.icon}
-
-                            </div>
-
-
-                            <div
-                                class="notification-content"
-                            >
-
-                                <h3>
-
-                                    ${notification.title}
-
-                                </h3>
-
-
-                                <p>
-
-                                    ${notification.message}
-
-                                </p>
-
-
-                                <span
-                                    class="notification-time"
-                                >
-
-                                    ${formatDate(
-                                        notification.date
-                                    )}
-
-                                </span>
-
-                            </div>
-
-                        </div>
-
-                    `;
-
-                }
-            )
-            .join("");
-
-
-    setupNotificationRead();
-
+  setupNotificationRead();
 }
 
+// =====================================================
+// CREATE NOTIFICATION CARD
+// =====================================================
+
+function createNotificationCard(notification) {
+  const id = notification.id;
+
+  const type = getNotificationType(notification.type, notification.title);
+
+  const icon = getNotificationIcon(notification.type, type);
+
+  const title = notification.title || "Notification";
+
+  const message = notification.message || "";
+
+  const isRead = notification.is_read === 1 || notification.is_read === true;
+
+  const unreadClass = isRead ? "" : "unread";
+
+  return `
+
+        <div
+            class="notification-card ${unreadClass}"
+            data-id="${id}"
+        >
+
+            <div
+                class="notification-icon ${type}"
+            >
+
+                ${escapeHTML(icon)}
+
+            </div>
+
+
+            <div
+                class="notification-content"
+            >
+
+                <h3>
+
+                    ${escapeHTML(title)}
+
+                </h3>
+
+
+                <p>
+
+                    ${escapeHTML(message)}
+
+                </p>
+
+
+                <span
+                    class="notification-time"
+                >
+
+                    ${formatDate(notification.created_at)}
+
+                </span>
+
+            </div>
+
+
+            ${
+              !isRead
+                ? `
+                        <div
+                            class="unread-dot"
+                            title="Unread"
+                        ></div>
+                    `
+                : ""
+            }
+
+        </div>
+
+    `;
+}
+
+// =====================================================
+// NOTIFICATION TYPE
+// =====================================================
+
+function getNotificationType(type, title) {
+  const value = String(type || title || "").toLowerCase();
+
+  if (value.includes("accept")) {
+    return "accepted";
+  }
+
+  if (value.includes("reject")) {
+    return "rejected";
+  }
+
+  if (value.includes("complete")) {
+    return "completed";
+  }
+
+  if (value.includes("message")) {
+    return "message";
+  }
+
+  return "request";
+}
+
+// =====================================================
+// NOTIFICATION ICON
+// =====================================================
+
+function getNotificationIcon(type, notificationType) {
+  if (notificationType === "accepted") {
+    return "✅";
+  }
+
+  if (notificationType === "rejected") {
+    return "❌";
+  }
+
+  if (notificationType === "completed") {
+    return "🎉";
+  }
+
+  if (notificationType === "message") {
+    return "💬";
+  }
+
+  return "🔔";
+}
 
 // =====================================================
 // UPDATE STATS
 // =====================================================
 
-function updateStats(
-    notifications
-) {
+function updateStats(notifications) {
+  const total = notifications.length;
 
-    const total =
-        notifications.length;
+  const unread = notifications.filter(function (notification) {
+    return notification.is_read === 0 || notification.is_read === false;
+  }).length;
 
+  const accepted = notifications.filter(function (notification) {
+    const type = String(
+      notification.type || notification.title || "",
+    ).toLowerCase();
 
-    const unread =
-        notifications.length;
+    return type.includes("accept");
+  }).length;
 
+  setText("totalNotifications", total);
 
-    const accepted =
-        notifications.filter(
-            function (notification) {
+  setText("unreadNotifications", unread);
 
-                return (
-                    notification.status ===
-                    "Accepted"
-                );
-
-            }
-        ).length;
-
-
-    setText(
-        "totalNotifications",
-        total
-    );
-
-
-    setText(
-        "unreadNotifications",
-        unread
-    );
-
-
-    setText(
-        "acceptedNotifications",
-        accepted
-    );
-
+  setText("acceptedNotifications", accepted);
 }
 
-
 // =====================================================
-// CLICK NOTIFICATION = READ
+// CLICK NOTIFICATION = MARK AS READ
 // =====================================================
 
 function setupNotificationRead() {
+  const cards = document.querySelectorAll(".notification-card");
 
-    const cards =
-        document.querySelectorAll(
-            ".notification-card"
-        );
+  cards.forEach(function (card) {
+    card.addEventListener("click", async function () {
+      const id = this.dataset.id;
 
+      if (!id) return;
 
-    cards.forEach(
-        function (card) {
+      const wasUnread = this.classList.contains("unread");
 
-            card.addEventListener(
-                "click",
-                function () {
+      if (!wasUnread) {
+        return;
+      }
 
-                    this.classList.remove(
-                        "unread"
-                    );
+      const data = await apiRequest(`/notifications/read/${id}`, {
+        method: "PUT",
+      });
 
-                    updateUnreadCount();
+      if (data && data.success) {
+        this.classList.remove("unread");
 
-                }
-            );
+        const dot = this.querySelector(".unread-dot");
 
+        if (dot) {
+          dot.remove();
         }
-    );
 
+        updateUnreadCount();
+      }
+    });
+  });
 }
 
-
 // =====================================================
-// UNREAD COUNT
+// UPDATE UNREAD COUNT
 // =====================================================
 
 function updateUnreadCount() {
+  const unread = document.querySelectorAll(".notification-card.unread").length;
 
-    const unread =
-        document.querySelectorAll(
-            ".notification-card.unread"
-        ).length;
-
-
-    setText(
-        "unreadNotifications",
-        unread
-    );
-
+  setText("unreadNotifications", unread);
 }
 
-
 // =====================================================
-// MARK ALL READ
+// MARK ALL AS READ
 // =====================================================
 
 function setupMarkAllRead() {
+  const button = document.getElementById("markAllReadBtn");
 
-    const button =
-        document.getElementById(
-            "markAllReadBtn"
-        );
+  if (!button) return;
 
+  button.addEventListener("click", async function () {
+    const unread = document.querySelectorAll(".notification-card.unread");
 
-    if (!button) return;
+    if (unread.length === 0) {
+      return;
+    }
 
+    const originalText = button.textContent;
 
-    button.addEventListener(
-        "click",
-        function () {
+    button.disabled = true;
 
-            document
-                .querySelectorAll(
-                    ".notification-card.unread"
-                )
-                .forEach(
-                    function (card) {
+    button.textContent = "Marking...";
 
-                        card.classList.remove(
-                            "unread"
-                        );
+    const data = await apiRequest("/notifications/read-all", {
+      method: "PUT",
+    });
 
-                    }
-                );
+    if (data && data.success) {
+      unread.forEach(function (card) {
+        card.classList.remove("unread");
 
+        const dot = card.querySelector(".unread-dot");
 
-            setText(
-                "unreadNotifications",
-                0
-            );
-
+        if (dot) {
+          dot.remove();
         }
-    );
+      });
 
+      setText("unreadNotifications", 0);
+    } else {
+      alert(data?.message || "Failed to mark all notifications as read.");
+    }
+
+    button.disabled = false;
+
+    button.textContent = originalText;
+  });
 }
-
 
 // =====================================================
 // SEARCH
 // =====================================================
 
 function setupSearch() {
+  const input = document.getElementById("notificationSearch");
 
-    const input =
-        document.getElementById(
-            "notificationSearch"
-        );
+  if (!input) return;
 
+  input.addEventListener("input", function () {
+    const keyword = this.value.trim().toLowerCase();
 
-    if (!input) return;
+    const cards = document.querySelectorAll(".notification-card");
 
+    cards.forEach(function (card) {
+      const text = card.textContent.toLowerCase();
 
-    input.addEventListener(
-        "input",
-        function () {
-
-            const keyword =
-                this.value
-                    .trim()
-                    .toLowerCase();
-
-
-            document
-                .querySelectorAll(
-                    ".notification-card"
-                )
-                .forEach(
-                    function (card) {
-
-                        const text =
-                            card.textContent
-                                .toLowerCase();
-
-
-                        card.style.display =
-                            text.includes(
-                                keyword
-                            )
-                                ? "flex"
-                                : "none";
-
-                    }
-                );
-
-        }
-    );
-
+      card.style.display = text.includes(keyword) ? "flex" : "none";
+    });
+  });
 }
-
 
 // =====================================================
 // THEME
 // =====================================================
 
 function setupTheme() {
+  const button = document.getElementById("themeToggle");
 
-    const button =
-        document.getElementById(
-            "themeToggle"
-        );
+  if (!button) return;
 
+  const savedTheme = localStorage.getItem("theme");
 
-    if (!button) return;
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark-mode");
 
+    button.textContent = "☀️";
+  }
 
-    const saved =
-        localStorage.getItem(
-            "theme"
-        );
+  button.addEventListener("click", function () {
+    document.body.classList.toggle("dark-mode");
 
+    const isDark = document.body.classList.contains("dark-mode");
 
-    if (
-        saved === "dark"
-    ) {
+    localStorage.setItem("theme", isDark ? "dark" : "light");
 
-        document.body.classList.add(
-            "dark-mode"
-        );
-
-        button.textContent =
-            "☀️";
-
-    }
-
-
-    button.addEventListener(
-        "click",
-        function () {
-
-            document.body.classList.toggle(
-                "dark-mode"
-            );
-
-
-            const dark =
-                document.body.classList.contains(
-                    "dark-mode"
-                );
-
-
-            localStorage.setItem(
-                "theme",
-                dark
-                    ? "dark"
-                    : "light"
-            );
-
-
-            button.textContent =
-                dark
-                    ? "☀️"
-                    : "🌙";
-
-        }
-    );
-
+    button.textContent = isDark ? "☀️" : "🌙";
+  });
 }
-
 
 // =====================================================
 // LOGOUT
 // =====================================================
 
 function setupLogout() {
+  const button = document.getElementById("logoutBtn");
 
-    const button =
-        document.getElementById(
-            "logoutBtn"
-        );
+  if (!button) return;
 
+  button.addEventListener("click", function () {
+    localStorage.removeItem("token");
 
-    if (!button) return;
-
-
-    button.addEventListener(
-        "click",
-        function () {
-
-            localStorage.removeItem(
-                "token"
-            );
-
-
-            window.location.href =
-                "login.html";
-
-        }
-    );
-
+    window.location.href = "login.html";
+  });
 }
 
-
 // =====================================================
-// DATE
+// DATE FORMAT
 // =====================================================
 
-function formatDate(
-    dateString
-) {
+function formatDate(dateString) {
+  if (!dateString) {
+    return "";
+  }
 
-    if (!dateString) {
+  const date = new Date(dateString);
 
-        return "";
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
 
-    }
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
 
+    month: "short",
 
-    const date =
-        new Date(
-            dateString
-        );
-
-
-    if (
-        Number.isNaN(
-            date.getTime()
-        )
-    ) {
-
-        return "";
-
-    }
-
-
-    return date.toLocaleDateString(
-        "en-US",
-        {
-            year: "numeric",
-            month: "short",
-            day: "numeric"
-        }
-    );
-
+    day: "numeric",
+  });
 }
 
+// =====================================================
+// ERROR
+// =====================================================
+
+function showNotificationError(message) {
+  const container = document.getElementById("notificationsContainer");
+
+  if (!container) return;
+
+  container.innerHTML = `
+
+        <div class="notification-empty">
+
+            <div class="empty-icon">
+                ⚠️
+            </div>
+
+            <h3>
+                Something went wrong
+            </h3>
+
+            <p>
+                ${escapeHTML(message)}
+            </p>
+
+        </div>
+
+    `;
+}
 
 // =====================================================
 // SET TEXT
 // =====================================================
 
-function setText(
-    id,
-    value
-) {
+function setText(id, value) {
+  const element = document.getElementById(id);
 
-    const element =
-        document.getElementById(
-            id
-        );
-
-
-    if (element) {
-
-        element.textContent =
-            value;
-
-    }
-
+  if (element) {
+    element.textContent = value;
+  }
 }
-
 
 // =====================================================
 // ESCAPE HTML
 // =====================================================
 
-function escapeHTML(
-    value
-) {
+function escapeHTML(value) {
+  if (value === null || value === undefined) {
+    return "";
+  }
 
-    if (
-        value === null ||
-        value === undefined
-    ) {
+  return String(value)
+    .replace(/&/g, "&amp;")
 
-        return "";
+    .replace(/</g, "&lt;")
 
-    }
+    .replace(/>/g, "&gt;")
 
+    .replace(/"/g, "&quot;")
 
-    return String(value)
-
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-
-        .replace(
-            /</g,
-            "&lt;"
-        )
-
-        .replace(
-            />/g,
-            "&gt;"
-        )
-
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
+    .replace(/'/g, "&#039;");
 }

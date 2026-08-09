@@ -1,337 +1,199 @@
-<!DOCTYPE html>
+<!doctype html>
+
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
 
-<head>
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Notifications | SkillSwap Campus</title>
 
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
+    <!-- Google Font -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet"
-    >
+    <!-- Main CSS -->
 
-    <link
-        rel="stylesheet"
-        href="css/style.css"
-    >
+    <link rel="stylesheet" href="css/style.css" />
 
-    <link
-        rel="stylesheet"
-        href="css/notifications.css"
-    >
-</head>
+    <!-- Notification CSS -->
 
-<body>
+    <link rel="stylesheet" href="css/notifications.css" />
+  </head>
 
-<div class="dashboard-layout">
-
+  <body>
     <!-- =====================================================
-         SIDEBAR
-    ====================================================== -->
+     SIDEBAR
+====================================================== -->
 
     <aside class="sidebar">
+      <div>
+        <div class="sidebar-logo">
+          <h2>SkillSwap</h2>
 
-        <div>
-
-            <div class="sidebar-logo">
-
-                <h2>SkillSwap</h2>
-
-                <p>Campus</p>
-
-            </div>
-
-
-            <ul class="sidebar-menu">
-
-                <li>
-                    <a href="dashboard.html">
-                        🏠 Dashboard
-                    </a>
-                </li>
-
-                <li>
-                    <a href="profile.html">
-                        👤 Profile
-                    </a>
-                </li>
-
-                <li>
-                    <a href="skills.html">
-                        💡 Skills
-                    </a>
-                </li>
-
-                <li>
-                    <a href="requests.html">
-                        🔄 Requests
-                    </a>
-                </li>
-
-                <li>
-                    <a href="messages.html">
-                        💬 Messages
-                    </a>
-                </li>
-
-                <!-- ACTIVE PAGE -->
-
-                <li class="active">
-                    <a href="notifications.html">
-                        🔔 Notifications
-                    </a>
-                </li>
-
-            </ul>
-
+          <p>Campus</p>
         </div>
 
+        <ul class="sidebar-menu">
+          <li>
+            <a href="dashboard.html"> 🏠 Dashboard </a>
+          </li>
 
-        <button
-            class="logout-btn"
-            id="logoutBtn"
-        >
-            Logout
-        </button>
+          <li>
+            <a href="profile.html"> 👤 Profile </a>
+          </li>
 
+          <li>
+            <a href="skills.html"> 💡 Skills </a>
+          </li>
+
+          <li>
+            <a href="requests.html"> 🔄 Requests </a>
+          </li>
+
+          <li>
+            <a href="messages.html"> 💬 Messages </a>
+          </li>
+
+          <li class="active">
+            <a href="notifications.html"> 🔔 Notifications </a>
+          </li>
+        </ul>
+      </div>
+
+      <button class="logout-btn" id="logoutBtn">Logout</button>
     </aside>
 
-
-
     <!-- =====================================================
-         MAIN CONTENT
-    ====================================================== -->
+     MAIN CONTENT
+====================================================== -->
 
     <main class="main-content">
+      <!-- =================================================
+         NAVBAR
+    ================================================== -->
 
+      <nav class="navbar">
+        <div class="logo">
+          <a href="dashboard.html">
+            <h2>SkillSwap</h2>
+          </a>
+        </div>
 
-        <!-- =================================================
-             NAVBAR
-        ================================================== -->
+        <div class="nav-right">
+          <!-- SEARCH -->
 
-        <nav class="navbar">
+          <div class="navbar-search">
+            <input
+              type="text"
+              id="notificationSearch"
+              class="search-input"
+              placeholder="Search notifications..."
+            />
+          </div>
 
-            <div class="logo">
+          <!-- THEME -->
 
-                <a href="dashboard.html">
+          <button class="icon-btn" id="themeToggle" type="button">🌙</button>
 
-                    <h2>SkillSwap</h2>
+          <!-- PROFILE -->
 
-                </a>
+          <div class="profile-box">
+            <span id="username"> User </span>
 
-            </div>
+            <div class="avatar" id="userAvatar">U</div>
+          </div>
+        </div>
+      </nav>
 
+      <!-- =================================================
+         PAGE HEADER
+    ================================================== -->
 
-            <div class="nav-right">
+      <section class="page-header">
+        <div>
+          <h1>Notifications 🔔</h1>
 
-                <div class="navbar-search">
+          <p>Stay updated with your skill exchanges.</p>
+        </div>
 
-                    <input
-                        type="text"
-                        id="notificationSearch"
-                        class="search-input"
-                        placeholder="Search notifications..."
-                    >
+        <button class="mark-read-btn" id="markAllReadBtn" type="button">
+          Mark All as Read
+        </button>
+      </section>
 
-                </div>
+      <!-- =================================================
+         NOTIFICATION STATS
+    ================================================== -->
 
+      <section class="notification-stats">
+        <!-- TOTAL -->
 
-                <button
-                    class="icon-btn"
-                    id="themeToggle"
-                >
-                    🌙
-                </button>
+        <div class="notification-stat-card">
+          <div class="stat-icon">🔔</div>
 
+          <div>
+            <h2 id="totalNotifications">0</h2>
 
-                <div class="profile-box">
+            <p>Total Notifications</p>
+          </div>
+        </div>
 
-                    <span id="username">
-                        User
-                    </span>
+        <!-- UNREAD -->
 
-                    <div
-                        class="avatar"
-                        id="userAvatar"
-                    >
-                        U
-                    </div>
+        <div class="notification-stat-card">
+          <div class="stat-icon unread">✉️</div>
 
-                </div>
+          <div>
+            <h2 id="unreadNotifications">0</h2>
 
-            </div>
+            <p>Unread</p>
+          </div>
+        </div>
 
-        </nav>
+        <!-- ACCEPTED -->
 
+        <div class="notification-stat-card">
+          <div class="stat-icon accepted">✓</div>
 
+          <div>
+            <h2 id="acceptedNotifications">0</h2>
 
-        <!-- =================================================
-             PAGE HEADER
-        ================================================== -->
+            <p>Accepted Exchanges</p>
+          </div>
+        </div>
+      </section>
 
-        <section class="page-header">
+      <!-- =================================================
+         NOTIFICATIONS
+    ================================================== -->
 
-            <div>
-
-                <h1>
-                    Notifications 🔔
-                </h1>
-
-                <p>
-                    Stay updated with your skill exchanges.
-                </p>
-
-            </div>
-
-
-            <button
-                class="mark-read-btn"
-                id="markAllReadBtn"
-            >
-                Mark All as Read
-            </button>
-
-        </section>
-
-
-
-        <!-- =================================================
-             NOTIFICATION STATS
-        ================================================== -->
-
-        <section class="notification-stats">
-
-            <div class="notification-stat-card">
-
-                <div class="stat-icon">
-                    🔔
-                </div>
-
-                <div>
-
-                    <h2 id="totalNotifications">
-                        0
-                    </h2>
-
-                    <p>
-                        Total Notifications
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="notification-stat-card">
-
-                <div class="stat-icon unread">
-                    ✉️
-                </div>
-
-                <div>
-
-                    <h2 id="unreadNotifications">
-                        0
-                    </h2>
-
-                    <p>
-                        Unread
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="notification-stat-card">
-
-                <div class="stat-icon accepted">
-                    ✓
-                </div>
-
-                <div>
-
-                    <h2 id="acceptedNotifications">
-                        0
-                    </h2>
-
-                    <p>
-                        Accepted Exchanges
-                    </p>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =================================================
-             NOTIFICATIONS
-        ================================================== -->
-
-        <section class="notifications-section">
-
-
-            <div class="section-header">
-
-                <div>
-
-                    <h2>
-                        Recent Notifications
-                    </h2>
-
-                    <p>
-                        Your latest exchange activity.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-
-            <div
-                id="notificationsContainer"
-                class="notifications-container"
-            >
-
-                <div class="notification-loading">
-
-                    Loading notifications...
-
-                </div>
-
-            </div>
-
-
-        </section>
-
+      <section class="notifications-section">
+        <div class="section-header">
+          <div>
+            <h2>Recent Notifications</h2>
+
+            <p>Your latest exchange activity.</p>
+          </div>
+        </div>
+
+        <div id="notificationsContainer" class="notifications-container">
+          <div class="notification-loading">Loading notifications...</div>
+        </div>
+      </section>
     </main>
 
-</div>
+    <!-- =====================================================
+     JAVASCRIPT
+====================================================== -->
 
-
-<script src="js/notifications.js"></script>
-
-</body>
-
+    <script src="js/notifications.js"></script>
+  </body>
 </html>
