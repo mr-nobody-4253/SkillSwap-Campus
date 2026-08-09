@@ -1,17 +1,15 @@
 const db = require("../config/db");
 
-// Create Post
+// =====================================================
+// CREATE POST
+// =====================================================
+
 const createPost = (req, res) => {
+  const userId = req.user.id;
 
-    const userId = req.user.id;
+  const { offered_skill, wanted_skill, description } = req.body;
 
-    const {
-        offered_skill,
-        wanted_skill,
-        description
-    } = req.body;
-
-    const query = `
+  const query = `
         INSERT INTO exchange_posts
         (
             user_id,
@@ -22,38 +20,31 @@ const createPost = (req, res) => {
         VALUES (?, ?, ?, ?)
     `;
 
-    db.query(
-        query,
-        [
-            userId,
-            offered_skill,
-            wanted_skill,
-            description
-        ],
-        (err) => {
+  db.query(query, [userId, offered_skill, wanted_skill, description], (err) => {
+    if (err) {
+      console.error("Create Post Error:", err);
 
-            if (err) {
-                return res.status(500).json({
-                    success: false,
-                    message: "Failed to create post"
-                });
-            }
+      return res.status(500).json({
+        success: false,
+        message: "Failed to create post",
+      });
+    }
 
-            res.status(201).json({
-                success: true,
-                message: "Post created successfully"
-            });
+    res.status(201).json({
+      success: true,
 
-        }
-    );
+      message: "Post created successfully",
+    });
+  });
 };
 
-
-// Get All Posts (Dashboard Feed)
+// =====================================================
+// GET ALL POSTS
+// Dashboard Feed
+// =====================================================
 
 const getAllPosts = (req, res) => {
-
-    const query = `
+  const query = `
         SELECT
             exchange_posts.id,
             users.name,
@@ -70,35 +61,34 @@ const getAllPosts = (req, res) => {
         ORDER BY exchange_posts.created_at DESC
     `;
 
-    db.query(
-        query,
-        (err, result) => {
+  db.query(query, (err, result) => {
+    if (err) {
+      console.error("Get All Posts Error:", err);
 
-            if (err) {
-                return res.status(500).json({
-                    success: false
-                });
-            }
+      return res.status(500).json({
+        success: false,
+        message: "Failed to load posts",
+      });
+    }
 
-            res.status(200).json({
-                success: true,
-                total_posts: result.length,
-                data: result
-            });
+    res.status(200).json({
+      success: true,
 
-        }
-    );
+      total_posts: result.length,
+
+      data: result,
+    });
+  });
 };
 
-
-// Get My Posts
+// =====================================================
+// GET MY POSTS
+// =====================================================
 
 const getMyPosts = (req, res) => {
+  const userId = req.user.id;
 
-    const userId = req.user.id;
-
-    db.query(
-        `
+  const query = `
         SELECT
             id,
             offered_skill,
@@ -111,35 +101,100 @@ const getMyPosts = (req, res) => {
         WHERE user_id = ?
 
         ORDER BY created_at DESC
-        `,
-        [userId],
-        (err, result) => {
+    `;
 
-            if (err) {
-                return res.status(500).json({
-                    success: false
-                });
-            }
+  db.query(query, [userId], (err, result) => {
+    if (err) {
+      console.error("Get My Posts Error:", err);
 
-            res.status(200).json({
-                success: true,
-                total_posts: result.length,
-                data: result
-            });
+      return res.status(500).json({
+        success: false,
 
-        }
-    );
+        message: "Failed to load your posts",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+
+      total_posts: result.length,
+
+      data: result,
+    });
+  });
 };
 
+// =====================================================
+// DELETE MY POST
+// =====================================================
 
-// Search Posts
+const deletePost = (req, res) => {
+  const postId = req.params.id;
+
+  const userId = req.user.id;
+
+  /*
+        IMPORTANT:
+
+        We are checking both:
+
+        post ID
+        AND
+        logged-in user's ID
+
+        So a user cannot delete
+        someone else's post.
+    */
+
+  const query = `
+        DELETE FROM exchange_posts
+
+        WHERE id = ?
+
+        AND user_id = ?
+    `;
+
+  db.query(query, [postId, userId], (err, result) => {
+    if (err) {
+      console.error("Delete Post Error:", err);
+
+      return res.status(500).json({
+        success: false,
+
+        message: "Failed to delete post",
+      });
+    }
+
+    /*
+                If affectedRows = 0,
+                either the post doesn't exist
+                or it belongs to another user.
+            */
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({
+        success: false,
+
+        message: "Post not found or you are not allowed to delete it",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+
+      message: "Post deleted successfully",
+    });
+  });
+};
+
+// =====================================================
+// SEARCH POSTS
+// =====================================================
 
 const searchPosts = (req, res) => {
+  const skill = req.query.skill;
 
-    const skill = req.query.skill;
-
-    db.query(
-        `
+  const query = `
         SELECT
             exchange_posts.id,
             users.name,
@@ -154,33 +209,43 @@ const searchPosts = (req, res) => {
 
         WHERE
             offered_skill LIKE ?
+
             OR wanted_skill LIKE ?
-        `,
-        [
-            `%${skill}%`,
-            `%${skill}%`
-        ],
-        (err, result) => {
+    `;
 
-            if (err) {
-                return res.status(500).json({
-                    success: false
-                });
-            }
+  db.query(query, [`%${skill}%`, `%${skill}%`], (err, result) => {
+    if (err) {
+      console.error("Search Posts Error:", err);
 
-            res.status(200).json({
-                success: true,
-                total_results: result.length,
-                data: result
-            });
+      return res.status(500).json({
+        success: false,
 
-        }
-    );
+        message: "Failed to search posts",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+
+      total_results: result.length,
+
+      data: result,
+    });
+  });
 };
 
+// =====================================================
+// EXPORT
+// =====================================================
+
 module.exports = {
-    createPost,
-    getAllPosts,
-    getMyPosts,
-    searchPosts
+  createPost,
+
+  getAllPosts,
+
+  getMyPosts,
+
+  deletePost,
+
+  searchPosts,
 };

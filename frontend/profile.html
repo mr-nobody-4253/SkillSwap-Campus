@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Profile | SkillSwap Campus</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- Profile CSS -->
+    <link rel="stylesheet" href="css/profile.css" />
+  </head>
+
+  <body>
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+      <div>
+        <!-- LOGO -->
+
+        <div class="sidebar-logo">
+          <h2>SkillSwap</h2>
+
+          <p>Campus</p>
+        </div>
+
+        <!-- MENU -->
+
+        <ul class="sidebar-menu">
+          <li>
+            <a href="dashboard.html"> 🏠 Dashboard </a>
+          </li>
+
+          <li class="active">
+            <a href="profile.html"> 👤 Profile </a>
+          </li>
+
+          <li>
+            <a href="skills.html"> 💡 Skills </a>
+          </li>
+
+          <li>
+            <a href="requests.html"> 🔄 Requests </a>
+          </li>
+
+          <li>
+            <a href="messages.html"> 💬 Messages </a>
+          </li>
+
+          <li>
+            <a href="notifications.html"> 🔔 Notifications </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- LOGOUT -->
+
+      <button class="logout-btn" id="logoutBtn" type="button">Logout</button>
+    </aside>
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="main-content">
+      <!-- =================================================
+             NAVBAR
+        ================================================== -->
+
+      <nav class="navbar">
+        <!-- LOGO -->
+
+        <div class="logo">
+          <a href="dashboard.html">
+            <h2>SkillSwap</h2>
+          </a>
+        </div>
+
+        <!-- RIGHT SIDE -->
+
+        <div class="nav-right">
+          <!-- SEARCH -->
+
+          <div class="navbar-search">
+            <input
+              type="text"
+              id="profileSearch"
+              class="search-input"
+              placeholder="Search..."
+            />
+          </div>
+
+          <!-- THEME -->
+
+          <button class="icon-btn" id="themeToggle" type="button">🌙</button>
+
+          <!-- USER -->
+
+          <div class="profile-box">
+            <span id="username"> User </span>
+
+            <div class="avatar" id="userAvatar">U</div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- =================================================
+             PAGE HEADER
+        ================================================== -->
+
+      <section class="page-header profile-page-header">
+        <div>
+          <h1>My Profile 👤</h1>
+
+          <p>Manage your profile information and posts.</p>
+        </div>
+      </section>
+
+      <!-- =================================================
+             PROFILE INFORMATION SECTION
+        ================================================== -->
+
+      <section class="profile-section">
+        <div class="section-header">
+          <div>
+            <h2>Profile Information</h2>
+
+            <p>View and manage your personal information.</p>
+          </div>
+
+          <!-- EDIT BUTTON -->
+
+          <button class="edit-profile-btn" id="editProfileBtn" type="button">
+            ✏️ Edit Profile
+          </button>
+        </div>
+
+        <!-- PROFILE CARD -->
+
+        <div class="profile-card">
+          <!-- PROFILE HEADER -->
+
+          <div class="profile-card-header">
+            <div class="profile-large-avatar">
+              <span id="profileAvatar"> U </span>
+            </div>
+
+            <div class="profile-header-info">
+              <h2 id="profileName">Loading...</h2>
+
+              <p id="profileEmail">Loading...</p>
+            </div>
+          </div>
+
+          <!-- PROFILE FORM -->
+
+          <form id="profileForm" class="profile-form">
+            <!-- NAME -->
+
+            <div class="profile-form-group">
+              <label for="name"> Name </label>
+
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Enter your name"
+                disabled
+                required
+              />
+            </div>
+
+            <!-- EMAIL -->
+
+            <div class="profile-form-group">
+              <label for="email"> Email </label>
+
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Your email"
+                disabled
+              />
+
+              <small class="readonly-text"> Email cannot be changed. </small>
+            </div>
+
+            <!-- DEPARTMENT -->
+
+            <div class="profile-form-group">
+              <label for="department"> Department </label>
+
+              <input
+                type="text"
+                id="department"
+                name="department"
+                placeholder="Enter your department"
+                disabled
+                required
+              />
+            </div>
+
+            <!-- SEMESTER -->
+
+            <div class="profile-form-group">
+              <label for="semester"> Semester </label>
+
+              <input
+                type="text"
+                id="semester"
+                name="semester"
+                placeholder="Enter your semester"
+                disabled
+                required
+              />
+            </div>
+
+            <!-- BIO -->
+
+            <div class="profile-form-group profile-bio-group">
+              <label for="bio"> Bio </label>
+
+              <textarea
+                id="bio"
+                name="bio"
+                rows="5"
+                placeholder="Tell something about yourself..."
+                disabled
+              ></textarea>
+            </div>
+
+            <!-- SAVE / CANCEL -->
+
+            <div class="profile-form-actions" id="profileFormActions">
+              <button
+                type="button"
+                class="cancel-profile-btn"
+                id="cancelProfileBtn"
+              >
+                Cancel
+              </button>
+
+              <button type="submit" class="save-profile-btn">
+                💾 Save Changes
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- =================================================
+             MY POSTS SECTION
+        ================================================== -->
+
+      <section class="my-posts-section">
+        <div class="section-header">
+          <div>
+            <h2>My Posts 📝</h2>
+
+            <p>All the exchange posts you have created.</p>
+          </div>
+
+          <!-- POST COUNT -->
+
+          <div class="my-post-count">
+            <span id="myPostCount"> 0 </span>
+
+            <span> Posts </span>
+          </div>
+        </div>
+
+        <!-- POSTS CONTAINER -->
+
+        <div id="myPostsContainer" class="my-posts-container">
+          <div class="posts-loading">Loading your posts...</div>
+        </div>
+      </section>
+    </main>
+
+    <!-- =====================================================
+         DELETE CONFIRMATION MODAL
+    ====================================================== -->
+
+    <div class="delete-modal-overlay" id="deleteModal">
+      <div class="delete-modal">
+        <div class="delete-modal-icon">⚠️</div>
+
+        <h3>Delete Post?</h3>
+
+        <p>
+          Are you sure you want to delete this post?
+
+          <br />
+
+          This action cannot be undone.
+        </p>
+
+        <div class="delete-modal-actions">
+          <button type="button" class="cancel-delete-btn" id="cancelDeleteBtn">
+            Cancel
+          </button>
+
+          <button
+            type="button"
+            class="confirm-delete-btn"
+            id="confirmDeleteBtn"
+          >
+            Delete Post
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- =====================================================
+         PROFILE JAVASCRIPT
+    ====================================================== -->
+
+    <script src="js/profile.js"></script>
+  </body>
+</html>

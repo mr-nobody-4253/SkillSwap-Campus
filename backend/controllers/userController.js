@@ -3,81 +3,103 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
+// =====================================================
+// LOGIN USER
+// =====================================================
+
 const loginUser = (req, res) => {
+  const { email, password } = req.body;
 
-    const { email, password } = req.body;
+  const query = "SELECT * FROM users WHERE email = ?";
 
-    const query = "SELECT * FROM users WHERE email = ?";
+  db.query(query, [email], async (err, result) => {
+    if (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Database Error",
+      });
+    }
 
-    db.query(query, [email], async (err, result) => {
+    // =================================================
+    // USER NOT FOUND
+    // =================================================
 
-        if (err) {
-            return res.status(500).json({
-                success: false,
-                message: "Database Error"
-            });
-        }
+    if (result.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found!",
+      });
+    }
 
-        // User not found
-        if (result.length === 0) {
-            return res.status(404).json({
-                success: false,
-                message: "User not found!"
-            });
-        }
+    const user = result[0];
 
-        const user = result[0];
-        console.log(user);
+    console.log(user);
 
-        // Compare Password
-        const isMatch = await bcrypt.compare(
-            password,
-            user.password
-        );
+    // =================================================
+    // COMPARE PASSWORD
+    // =================================================
 
-        if (!isMatch) {
-            return res.status(401).json({
-                success: false,
-                message: "Invalid Password!"
-            });
-        }
+    const isMatch = await bcrypt.compare(password, user.password);
 
-        // Generate JWT Token
-        const token = jwt.sign(
-            {
-                id: user.id,
-                name: user.name,
-                email: user.email
-            },
-            process.env.JWT_SECRET,
-            {
-                expiresIn: "7d"
-            }
-        );
+    if (!isMatch) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid Password!",
+      });
+    }
 
-       res.status(200).json({
-    success: true,
-    message: "Login Successful!",
-    token,
+    // =================================================
+    // GENERATE JWT TOKEN
+    // =================================================
 
-    user: {
+    const token = jwt.sign(
+      {
         id: user.id,
         name: user.name,
         email: user.email,
-        department: user.department,
-        semester: user.semester,
-        profile_picture: user.profile_picture
-    }
-});
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "7d",
+      },
+    );
 
+    // =================================================
+    // LOGIN RESPONSE
+    // =================================================
+
+    res.status(200).json({
+      success: true,
+
+      message: "Login Successful!",
+
+      token,
+
+      user: {
+        id: user.id,
+
+        name: user.name,
+
+        email: user.email,
+
+        department: user.department,
+
+        semester: user.semester,
+
+        profile_picture: user.profile_picture,
+      },
     });
+  });
 };
 
+// =====================================================
+// GET PROFILE
+// =====================================================
+
 const getProfile = (req, res) => {
+  const userId = req.user.id;
 
-    const userId = req.user.id;
-
-    const query = `
+  const query = `
         SELECT
             id,
             name,
@@ -91,32 +113,42 @@ const getProfile = (req, res) => {
         WHERE id = ?
     `;
 
-    db.query(query, [userId], (err, result) => {
+  db.query(query, [userId], (err, result) => {
+    if (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Database Error",
+      });
+    }
 
-        if (err) {
-            return res.status(500).json({
-                success: false,
-                message: "Database Error"
-            });
-        }
+    // =================================================
+    // USER NOT FOUND
+    // =================================================
 
-        if (result.length === 0) {
-            return res.status(404).json({
-                success: false,
-                message: "User not found!"
-            });
-        }
+    if (result.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found!",
+      });
+    }
 
-        res.status(200).json({
-            success: true,
-            data: result[0]
-        });
+    // =================================================
+    // PROFILE RESPONSE
+    // =================================================
 
+    res.status(200).json({
+      success: true,
+
+      data: result[0],
     });
+  });
 };
 
-const updateProfile = (req, res) => {
+// =====================================================
+// UPDATE PROFILE
+// =====================================================
 
+const updateProfile = (req, res) => {
     const userId = req.user.id;
 
     const {
@@ -151,88 +183,199 @@ const updateProfile = (req, res) => {
         (err, result) => {
 
             if (err) {
+                console.error("Update Profile Error:", err);
+
                 return res.status(500).json({
                     success: false,
                     message: "Failed to update profile"
                 });
             }
 
-            res.status(200).json({
-                success: true,
-                message: "Profile Updated Successfully!"
-            });
+            if (result.affectedRows === 0) {
+                return res.status(404).json({
+                    success: false,
+                    message: "User not found"
+                });
+            }
+
+            const getUserQuery = `
+                SELECT
+                    id,
+                    name,
+                    email,
+                    department,
+                    semester,
+                    bio,
+                    profile_picture
+                FROM users
+                WHERE id = ?
+            `;
+
+            db.query(
+                getUserQuery,
+                [userId],
+                (err, userResult) => {
+
+                    if (err) {
+                        console.error(
+                            "Get Updated User Error:",
+                            err
+                        );
+
+                        return res.status(500).json({
+                            success: false,
+                            message:
+                                "Profile updated but failed to fetch updated user"
+                        });
+                    }
+
+                    if (userResult.length === 0) {
+                        return res.status(404).json({
+                            success: false,
+                            message: "User not found"
+                        });
+                    }
+
+                    const user = userResult[0];
+
+                    const token = jwt.sign(
+                        {
+                            id: user.id,
+                            name: user.name,
+                            email: user.email
+                        },
+                        process.env.JWT_SECRET,
+                        {
+                            expiresIn: "7d"
+                        }
+                    );
+
+                    return res.status(200).json({
+                        success: true,
+                        message:
+                            "Profile Updated Successfully!",
+                        token,
+                        user: {
+                            id: user.id,
+                            name: user.name,
+                            email: user.email,
+                            department: user.department,
+                            semester: user.semester,
+                            bio: user.bio,
+                            profile_picture:
+                                user.profile_picture
+                        }
+                    });
+                }
+            );
         }
     );
 };
 
+// =====================================================
+// REGISTER USER
+// =====================================================
+
 const registerUser = async (req, res) => {
-    try {
+  try {
+    const { name, email, password, department, semester } = req.body;
 
-        const { name, email, password, department, semester } = req.body;
+    // =================================================
+    // CHECK IF USER ALREADY EXISTS
+    // =================================================
 
-        // Check if user already exists
-        const checkQuery = "SELECT * FROM users WHERE email = ?";
+    const checkQuery = "SELECT * FROM users WHERE email = ?";
 
-        db.query(checkQuery, [email], async (err, result) => {
+    db.query(checkQuery, [email], async (err, result) => {
+      if (err) {
+        return res.status(500).json({
+          success: false,
 
-            if (err) {
-                return res.status(500).json({
-                    success: false,
-                    message: "Database Error",
-                    error: err
-                });
-            }
+          message: "Database Error",
 
-            if (result.length > 0) {
-                return res.status(400).json({
-                    success: false,
-                    message: "Email already exists!"
-                });
-            }
-
-            // Hash Password
-            const hashedPassword = await bcrypt.hash(password, 10);
-
-            // Insert User
-            const insertQuery = `
-                INSERT INTO users
-                (name, email, password, department, semester)
-                VALUES (?, ?, ?, ?, ?)
-            `;
-
-            db.query(
-                insertQuery,
-                [name, email, hashedPassword, department, semester],
-                (err, result) => {
-
-                    if (err) {
-                        return res.status(500).json({
-                            success: false,
-                            message: "Failed to Register User",
-                            error: err
-                        });
-                    }
-res.status(201).json({
-    success: true,
-    message: "Registration Successful!"
-});
-                }
-            );
+          error: err,
         });
+      }
 
-    } catch (error) {
+      // =================================================
+      // EMAIL ALREADY EXISTS
+      // =================================================
 
-        res.status(500).json({
-            success: false,
-            message: error.message
+      if (result.length > 0) {
+        return res.status(400).json({
+          success: false,
+
+          message: "Email already exists!",
         });
+      }
 
-    }
+      // =================================================
+      // HASH PASSWORD
+      // =================================================
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      // =================================================
+      // INSERT USER
+      // =================================================
+
+      const insertQuery = `
+                    INSERT INTO users
+                    (
+                        name,
+                        email,
+                        password,
+                        department,
+                        semester
+                    )
+                    VALUES (?, ?, ?, ?, ?)
+                `;
+
+      db.query(
+        insertQuery,
+        [name, email, hashedPassword, department, semester],
+        (err, result) => {
+          if (err) {
+            return res.status(500).json({
+              success: false,
+
+              message: "Failed to Register User",
+
+              error: err,
+            });
+          }
+
+          // =================================================
+          // REGISTRATION SUCCESS
+          // =================================================
+
+          res.status(201).json({
+            success: true,
+
+            message: "Registration Successful!",
+          });
+        },
+      );
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+
+      message: error.message,
+    });
+  }
 };
 
+// =====================================================
+// EXPORT
+// =====================================================
+
 module.exports = {
-    registerUser,
-    loginUser,
-    getProfile,
-    updateProfile
+  registerUser,
+
+  loginUser,
+
+  getProfile,
+
+  updateProfile,
 };

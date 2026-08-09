@@ -1,0 +1,877 @@
+/* =====================================================
+   SKILLSWAP CAMPUS
+   PROFILE PAGE
+===================================================== */
+
+/* =====================================================
+   PROFILE PAGE HEADER
+===================================================== */
+
+.profile-page-header {
+  margin-bottom: 25px;
+}
+
+/* =====================================================
+   COMMON SECTION
+===================================================== */
+
+.profile-section,
+.my-posts-section {
+  margin-bottom: 30px;
+}
+
+/* =====================================================
+   SECTION HEADER
+===================================================== */
+
+.profile-section .section-header,
+.my-posts-section .section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.profile-section .section-header h2,
+.my-posts-section .section-header h2 {
+  margin: 0 0 5px;
+}
+
+.profile-section .section-header p,
+.my-posts-section .section-header p {
+  margin: 0;
+  color: #777;
+  font-size: 14px;
+}
+
+/* =====================================================
+   EDIT PROFILE BUTTON
+===================================================== */
+
+.edit-profile-btn {
+  border: none;
+  background: #4f46e5;
+  color: white;
+
+  padding: 11px 18px;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.edit-profile-btn:hover {
+  background: #4338ca;
+  transform: translateY(-1px);
+}
+
+/* =====================================================
+   PROFILE CARD
+===================================================== */
+
+.profile-card {
+  background: white;
+
+  border-radius: 14px;
+
+  padding: 28px;
+
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+
+  border: 1px solid #eeeeee;
+}
+
+/* =====================================================
+   PROFILE CARD HEADER
+===================================================== */
+
+.profile-card-header {
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+
+  padding-bottom: 25px;
+
+  margin-bottom: 25px;
+
+  border-bottom: 1px solid #eeeeee;
+}
+
+/* =====================================================
+   LARGE AVATAR
+===================================================== */
+
+.profile-large-avatar {
+  width: 78px;
+  height: 78px;
+
+  min-width: 78px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #4f46e5;
+
+  color: white;
+
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.profile-header-info h2 {
+  margin: 0 0 5px;
+
+  font-size: 22px;
+}
+
+.profile-header-info p {
+  margin: 0;
+
+  color: #777;
+
+  font-size: 14px;
+}
+
+/* =====================================================
+   PROFILE FORM
+===================================================== */
+
+.profile-form {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 20px;
+}
+
+/* =====================================================
+   FORM GROUP
+===================================================== */
+
+.profile-form-group {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+.profile-form-group label {
+  font-size: 14px;
+
+  font-weight: 600;
+
+  color: #333;
+}
+
+/* =====================================================
+   INPUTS
+===================================================== */
+
+.profile-form-group input,
+.profile-form-group textarea {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 12px 14px;
+
+  border: 1px solid #dcdcdc;
+
+  border-radius: 8px;
+
+  background: #f8f8f8;
+
+  color: #222;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  outline: none;
+
+  transition:
+    border 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* =====================================================
+   ENABLED INPUT
+===================================================== */
+
+.profile-form-group input:not(:disabled),
+.profile-form-group textarea:not(:disabled) {
+  background: white;
+
+  border-color: #cfcfcf;
+}
+
+.profile-form-group input:not(:disabled):focus,
+.profile-form-group textarea:not(:disabled):focus {
+  border-color: #4f46e5;
+
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* =====================================================
+   DISABLED INPUT
+===================================================== */
+
+.profile-form-group input:disabled,
+.profile-form-group textarea:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.75;
+}
+
+/* =====================================================
+   TEXTAREA
+===================================================== */
+
+.profile-form-group textarea {
+  resize: vertical;
+
+  min-height: 120px;
+}
+
+.profile-bio-group {
+  grid-column: 1 / -1;
+}
+
+/* =====================================================
+   READONLY EMAIL TEXT
+===================================================== */
+
+.readonly-text {
+  font-size: 11px;
+
+  color: #888;
+}
+
+/* =====================================================
+   FORM ACTIONS
+===================================================== */
+
+.profile-form-actions {
+  grid-column: 1 / -1;
+
+  display: none;
+
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  padding-top: 5px;
+}
+
+/* =====================================================
+   SAVE BUTTON
+===================================================== */
+
+.save-profile-btn {
+  border: none;
+
+  background: #16a34a;
+
+  color: white;
+
+  padding: 11px 20px;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.save-profile-btn:hover {
+  background: #15803d;
+
+  transform: translateY(-1px);
+}
+
+/* =====================================================
+   CANCEL PROFILE BUTTON
+===================================================== */
+
+.cancel-profile-btn {
+  border: 1px solid #d1d5db;
+
+  background: white;
+
+  color: #444;
+
+  padding: 11px 20px;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: background 0.2s ease;
+}
+
+.cancel-profile-btn:hover {
+  background: #f3f4f6;
+}
+
+/* =====================================================
+   MY POST COUNT
+===================================================== */
+
+.my-post-count {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 8px 13px;
+
+  border-radius: 8px;
+
+  background: #eef2ff;
+
+  color: #4f46e5;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+.my-post-count span:first-child {
+  font-size: 16px;
+}
+
+/* =====================================================
+   MY POSTS CONTAINER
+===================================================== */
+
+.my-posts-container {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 20px;
+}
+
+/* =====================================================
+   POST CARD
+===================================================== */
+
+.my-post-card {
+  background: white;
+
+  border: 1px solid #eeeeee;
+
+  border-radius: 14px;
+
+  padding: 22px;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.my-post-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 7px 22px rgba(0, 0, 0, 0.08);
+}
+
+/* =====================================================
+   POST HEADER
+===================================================== */
+
+.my-post-card-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+  gap: 15px;
+
+  margin-bottom: 18px;
+}
+
+.my-post-date {
+  color: #888;
+
+  font-size: 12px;
+}
+
+/* =====================================================
+   DELETE BUTTON
+===================================================== */
+
+.delete-post-btn {
+  border: none;
+
+  background: #fee2e2;
+
+  color: #dc2626;
+
+  padding: 8px 11px;
+
+  border-radius: 7px;
+
+  font-family: inherit;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: background 0.2s ease;
+}
+
+.delete-post-btn:hover {
+  background: #fecaca;
+}
+
+/* =====================================================
+   POST SKILLS
+===================================================== */
+
+.my-post-skills {
+  display: grid;
+
+  grid-template-columns: 1fr auto 1fr;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 18px;
+}
+
+.my-post-skill-box {
+  padding: 13px;
+
+  background: #f8fafc;
+
+  border-radius: 8px;
+
+  border: 1px solid #edf0f3;
+}
+
+.my-post-skill-label {
+  display: block;
+
+  font-size: 11px;
+
+  color: #888;
+
+  margin-bottom: 4px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.4px;
+}
+
+.my-post-skill-box strong {
+  display: block;
+
+  font-size: 14px;
+
+  color: #333;
+
+  word-break: break-word;
+}
+
+.my-post-exchange-icon {
+  font-size: 20px;
+
+  color: #4f46e5;
+
+  text-align: center;
+}
+
+/* =====================================================
+   POST DESCRIPTION
+===================================================== */
+
+.my-post-description {
+  padding-top: 15px;
+
+  border-top: 1px solid #eeeeee;
+}
+
+.my-post-description p {
+  margin: 0;
+
+  color: #666;
+
+  font-size: 13px;
+
+  line-height: 1.7;
+
+  word-break: break-word;
+}
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+.posts-loading {
+  grid-column: 1 / -1;
+
+  text-align: center;
+
+  padding: 50px 20px;
+
+  color: #777;
+
+  font-size: 14px;
+}
+
+/* =====================================================
+   EMPTY POSTS
+===================================================== */
+
+.my-posts-empty {
+  grid-column: 1 / -1;
+
+  background: white;
+
+  border: 1px dashed #d6d6d6;
+
+  border-radius: 14px;
+
+  padding: 50px 20px;
+
+  text-align: center;
+}
+
+.my-posts-empty .empty-icon {
+  font-size: 40px;
+
+  margin-bottom: 10px;
+}
+
+.my-posts-empty h3 {
+  margin: 0 0 7px;
+
+  font-size: 18px;
+}
+
+.my-posts-empty p {
+  margin: 0;
+
+  color: #777;
+
+  font-size: 13px;
+}
+
+/* =====================================================
+   DELETE MODAL
+===================================================== */
+
+.delete-modal-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.5);
+
+  display: none;
+
+  align-items: center;
+
+  justify-content: center;
+
+  z-index: 9999;
+
+  padding: 20px;
+}
+
+.delete-modal {
+  width: 100%;
+
+  max-width: 420px;
+
+  background: white;
+
+  border-radius: 14px;
+
+  padding: 30px;
+
+  text-align: center;
+
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+}
+
+.delete-modal-icon {
+  font-size: 40px;
+
+  margin-bottom: 10px;
+}
+
+.delete-modal h3 {
+  margin: 0 0 10px;
+
+  font-size: 20px;
+}
+
+.delete-modal p {
+  margin: 0;
+
+  color: #666;
+
+  font-size: 13px;
+
+  line-height: 1.7;
+}
+
+/* =====================================================
+   DELETE MODAL ACTIONS
+===================================================== */
+
+.delete-modal-actions {
+  display: flex;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  margin-top: 25px;
+}
+
+.cancel-delete-btn,
+.confirm-delete-btn {
+  border: none;
+
+  padding: 10px 18px;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.cancel-delete-btn {
+  background: #f1f5f9;
+
+  color: #475569;
+}
+
+.cancel-delete-btn:hover {
+  background: #e2e8f0;
+}
+
+.confirm-delete-btn {
+  background: #dc2626;
+
+  color: white;
+}
+
+.confirm-delete-btn:hover {
+  background: #b91c1c;
+}
+
+/* =====================================================
+   DARK MODE
+===================================================== */
+
+body.dark-mode .profile-card,
+body.dark-mode .my-post-card,
+body.dark-mode .my-posts-empty,
+body.dark-mode .delete-modal {
+  background: #1e1e1e;
+
+  border-color: #333;
+}
+
+body.dark-mode .profile-section .section-header p,
+body.dark-mode .my-posts-section .section-header p {
+  color: #aaa;
+}
+
+body.dark-mode .profile-card-header {
+  border-color: #333;
+}
+
+body.dark-mode .profile-header-info h2,
+body.dark-mode .profile-form-group label,
+body.dark-mode .my-post-skill-box strong,
+body.dark-mode .my-posts-empty h3 {
+  color: #f1f1f1;
+}
+
+body.dark-mode .profile-header-info p,
+body.dark-mode .my-post-description p,
+body.dark-mode .my-post-date,
+body.dark-mode .my-posts-empty p {
+  color: #aaa;
+}
+
+body.dark-mode .profile-form-group input,
+body.dark-mode .profile-form-group textarea {
+  background: #292929;
+
+  border-color: #444;
+
+  color: #f1f1f1;
+}
+
+body.dark-mode .profile-form-group input:disabled,
+body.dark-mode .profile-form-group textarea:disabled {
+  background: #252525;
+}
+
+body.dark-mode .my-post-skill-box {
+  background: #292929;
+
+  border-color: #3a3a3a;
+}
+
+body.dark-mode .my-post-description {
+  border-color: #333;
+}
+
+body.dark-mode .cancel-profile-btn {
+  background: #292929;
+
+  color: #ddd;
+
+  border-color: #444;
+}
+
+body.dark-mode .cancel-profile-btn:hover {
+  background: #333;
+}
+
+body.dark-mode .cancel-delete-btn {
+  background: #333;
+
+  color: #ddd;
+}
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 900px) {
+  .my-posts-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 700px) {
+  .profile-section .section-header,
+  .my-posts-section .section-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .profile-card {
+    padding: 20px;
+  }
+
+  .profile-form {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-bio-group {
+    grid-column: auto;
+  }
+
+  .profile-form-actions {
+    grid-column: auto;
+
+    width: 100%;
+  }
+
+  .profile-form-actions button {
+    flex: 1;
+  }
+
+  .my-post-skills {
+    grid-template-columns: 1fr;
+  }
+
+  .my-post-exchange-icon {
+    transform: rotate(90deg);
+  }
+
+  .profile-large-avatar {
+    width: 65px;
+    height: 65px;
+
+    min-width: 65px;
+
+    font-size: 25px;
+  }
+
+  .profile-header-info h2 {
+    font-size: 18px;
+  }
+}
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 450px) {
+  .profile-card {
+    padding: 16px;
+  }
+
+  .profile-card-header {
+    gap: 12px;
+  }
+
+  .profile-form-actions {
+    flex-direction: column;
+  }
+
+  .profile-form-actions button {
+    width: 100%;
+  }
+
+  .delete-modal {
+    padding: 22px;
+  }
+}
