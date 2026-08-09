@@ -5,7 +5,11 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <link rel="icon" href="data:," />
+
     <title>Dashboard | SkillSwap Campus</title>
+
+    <!-- Google Font -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
 
@@ -16,52 +20,113 @@
       rel="stylesheet"
     />
 
+    <!-- Main CSS -->
+
     <link rel="stylesheet" href="css/style.css" />
   </head>
 
   <body>
-    <main class="dashboard-layout">
-      <!-- SIDEBAR -->
+    <!-- =====================================================
+     DASHBOARD LAYOUT
+===================================================== -->
+
+    <div class="dashboard-layout">
+      <!-- =================================================
+         SIDEBAR
+    ================================================== -->
 
       <aside class="sidebar">
+        <!-- Sidebar Top -->
+
         <div>
+          <!-- Branding -->
+
           <div class="sidebar-logo">
-            <h2>SkillSwap</h2>
-            <p>Campus</p>
+            <a
+              href="dashboard.html"
+              style="text-decoration: none; color: inherit"
+            >
+              <h2>SkillSwap</h2>
+
+              <p>Campus</p>
+            </a>
           </div>
 
+          <!-- Navigation -->
+
           <ul class="sidebar-menu">
-            <li class="active">🏠 Dashboard</li>
-            <li>👤 Profile</li>
-            <li>🎯 My Skills</li>
-            <li>🔄 Requests</li>
-            <li>💬 Messages</li>
-            <li>🔔 Notifications</li>
-            <li>📜 History</li>
-            <li>⚙️ Settings</li>
+            <li>
+              <a href="dashboard.html" class="active"> 🏠 Dashboard </a>
+            </li>
+
+            <li>
+              <a href="profile.html"> 👤 Profile </a>
+            </li>
+
+            <li>
+              <a href="skills.html"> 💡 Skills </a>
+            </li>
+
+            <li>
+              <a href="requests.html"> 🔄 Requests </a>
+            </li>
+
+            <li>
+              <a href="messages.html"> 💬 Messages </a>
+            </li>
+
+            <li>
+              <a href="notifications.html"> 🔔 Notifications </a>
+            </li>
           </ul>
         </div>
 
-        <button class="logout-btn" id="logoutBtn">Logout</button>
+        <!-- Logout -->
+
+        <button class="logout-btn" id="logoutBtn" type="button">Logout</button>
       </aside>
 
-      <!-- MAIN CONTENT -->
+      <!-- =================================================
+         MAIN CONTENT
+    ================================================== -->
 
-      <div class="main-content">
+      <main class="main-content">
+        <!-- =================================================
+             NAVBAR
+        ================================================== -->
+
         <nav class="navbar">
+          <!-- Logo -->
+
           <div class="logo">
-            <h2>SkillSwap</h2>
+            <a
+              href="dashboard.html"
+              style="text-decoration: none; color: inherit"
+            >
+              <h2>SkillSwap</h2>
+            </a>
           </div>
 
+          <!-- Right Side -->
+
           <div class="nav-right">
-            <input
-              type="text"
-              placeholder="Search Skills..."
-              class="search-input"
-            />
+            <!-- Search -->
+
+            <div class="navbar-search">
+              <input
+                type="text"
+                id="navbarSkillSearch"
+                class="search-input"
+                placeholder="Search Skills..."
+              />
+            </div>
+
+            <!-- Notification -->
 
             <div class="notification-wrapper">
-              <button class="icon-btn" id="notificationBtn">🔔</button>
+              <button class="icon-btn" id="notificationBtn" type="button">
+                🔔
+              </button>
 
               <div class="notification-dropdown" id="notificationDropdown">
                 <h4>Notifications</h4>
@@ -72,15 +137,23 @@
               </div>
             </div>
 
-            <button class="icon-btn" id="themeToggle">🌙</button>
+            <!-- Theme -->
+
+            <button class="icon-btn" id="themeToggle" type="button">🌙</button>
+
+            <!-- User -->
 
             <div class="profile-box">
               <span id="username"> Prince </span>
 
-              <div class="avatar">P</div>
+              <div class="avatar" id="userAvatar">P</div>
             </div>
           </div>
         </nav>
+
+        <!-- =================================================
+             WELCOME SECTION
+        ================================================== -->
 
         <section class="welcome-section">
           <h1>
@@ -94,51 +167,208 @@
           <p>Ready to exchange new skills today?</p>
         </section>
 
+        <!-- =================================================
+             STATS
+        ================================================== -->
+
         <section class="stats-grid">
+          <!-- Incoming -->
+
           <div class="stat-card">
             <h2 id="incomingCount">0</h2>
+
             <p>Incoming Requests</p>
           </div>
 
+          <!-- Sent -->
+
           <div class="stat-card">
             <h2 id="sentCount">0</h2>
+
             <p>Sent Requests</p>
           </div>
 
+          <!-- Accepted -->
+
           <div class="stat-card">
             <h2 id="acceptedCount">0</h2>
+
             <p>Accepted</p>
           </div>
 
+          <!-- Completed -->
+
           <div class="stat-card">
             <h2 id="completedCount">0</h2>
+
             <p>Completed</p>
           </div>
         </section>
-        <section class="recent-notifications">
-          <div class="section-header">
-            <h2>Recent Notifications</h2>
 
-            <span> View All </span>
+        <!-- =================================================
+             SKILL EXCHANGE COMMUNITY
+        ================================================== -->
+
+        <section class="exchange-section">
+          <!-- Section Header -->
+
+          <div class="section-header exchange-header">
+            <div>
+              <h2>Skill Exchange Community</h2>
+
+              <p>Find people to exchange skills with.</p>
+            </div>
+
+            <button
+              class="create-post-btn"
+              id="createPostButton"
+              type="button"
+              onclick="openCreatePostModal()"
+            >
+              + Create Post
+            </button>
           </div>
 
-          <div id="recentNotifications">
-            <div class="notification-card">Loading notifications...</div>
+          <!-- =================================================
+                 SEARCH POSTS
+            ================================================== -->
+
+          <div class="exchange-search">
+            <input
+              type="text"
+              id="skillSearchInput"
+              placeholder="Search by skill..."
+            />
+
+            <button type="button" onclick="searchPosts()">Search</button>
+
+            <button type="button" onclick="loadPosts()">All Posts</button>
+          </div>
+
+          <!-- =================================================
+                 POSTS
+            ================================================== -->
+
+          <div id="exchangePostsContainer" class="exchange-posts">
+            <div class="exchange-loading">Loading exchange posts...</div>
           </div>
         </section>
-        <section class="recent-messages">
-          <div class="section-header">
-            <h2>Recent Messages</h2>
+      </main>
+    </div>
 
-            <span> View All </span>
-          </div>
+    <!-- =====================================================
+     CREATE EXCHANGE POST MODAL
+===================================================== -->
 
-          <div id="recentMessages">
-            <div class="message-card">Loading messages...</div>
-          </div>
-        </section>
+    <div class="modal-overlay" id="createPostModal" style="display: none">
+      <div class="modal-box">
+        <!-- Close -->
+
+        <button
+          class="modal-close"
+          type="button"
+          onclick="closeCreatePostModal()"
+        >
+          ×
+        </button>
+
+        <!-- Title -->
+
+        <h2>Create Exchange Post</h2>
+
+        <p class="modal-subtitle">
+          Tell the community what you can teach and what you want to learn.
+        </p>
+
+        <!-- =================================================
+             OFFERED SKILL
+        ================================================== -->
+
+        <label for="postOfferedSkill"> Your Skill </label>
+
+        <select id="postOfferedSkill">
+          <option value="">Select a skill</option>
+        </select>
+
+        <!-- =================================================
+             WANTED SKILL
+        ================================================== -->
+
+        <label for="postWantedSkill"> Skill You Want to Learn </label>
+
+        <input type="text" id="postWantedSkill" placeholder="e.g. Java" />
+
+        <!-- =================================================
+             DESCRIPTION
+        ================================================== -->
+
+        <label for="postDescription"> Description </label>
+
+        <textarea
+          id="postDescription"
+          rows="4"
+          placeholder="Tell others what you want to exchange..."
+        ></textarea>
+
+        <!-- Submit -->
+
+        <button
+          class="modal-submit-btn"
+          type="button"
+          onclick="createExchangePost()"
+        >
+          Create Post
+        </button>
       </div>
-    </main>
+    </div>
+
+    <!-- =====================================================
+     REQUEST EXCHANGE MODAL
+===================================================== -->
+
+    <div class="modal-overlay" id="requestModal" style="display: none">
+      <div class="modal-box">
+        <!-- Close -->
+
+        <button class="modal-close" type="button" onclick="closeRequestModal()">
+          ×
+        </button>
+
+        <!-- Title -->
+
+        <h2>Request Skill Exchange</h2>
+
+        <!-- Post Information -->
+
+        <p id="requestPostInfo" class="modal-subtitle"></p>
+
+        <!-- =================================================
+             USER SKILL
+        ================================================== -->
+
+        <label for="requestSkillSelect">
+          Choose the skill you want to offer
+        </label>
+
+        <select id="requestSkillSelect">
+          <option value="">Select your skill</option>
+        </select>
+
+        <!-- Submit -->
+
+        <button
+          class="modal-submit-btn"
+          type="button"
+          onclick="sendExchangeRequest()"
+        >
+          Send Exchange Request
+        </button>
+      </div>
+    </div>
+
+    <!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
 
     <script src="js/dashboard.js"></script>
   </body>

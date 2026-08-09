@@ -9,6 +9,8 @@ const messageRoutes = require("./routes/messageRoutes");
 
 const notificationRoutes = require("./routes/notificationRoutes");
 
+const postRoutes = require("./routes/postRoutes");
+
 console.log(process.env.JWT_SECRET);
 
 const db = require("./config/db");
@@ -33,6 +35,11 @@ app.use("/api/notifications", notificationRoutes);
 app.get("/", (req, res) => {
     res.send("SkillSwap Campus Server is Running!");
 });
+
+app.use(
+    "/api/posts",
+    postRoutes
+);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

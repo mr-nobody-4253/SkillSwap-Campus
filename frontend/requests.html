@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Requests | SkillSwap Campus</title>
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<div class="dashboard-layout">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+
+        <div>
+
+            <div class="sidebar-logo">
+
+                <h2>SkillSwap</h2>
+
+                <p>Campus</p>
+
+            </div>
+
+
+            <ul class="sidebar-menu">
+
+
+                <li>
+
+                    <a href="dashboard.html">
+                        🏠 Dashboard
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="profile.html">
+                        👤 Profile
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="skills.html">
+                        💡 Skills
+                    </a>
+
+                </li>
+
+
+                <!-- ACTIVE -->
+
+                <li class="active">
+
+                    <a href="requests.html">
+                        🔄 Requests
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="messages.html">
+                        💬 Messages
+                    </a>
+
+                </li>
+
+
+                <li>
+
+                    <a href="notifications.html">
+                        🔔 Notifications
+                    </a>
+
+                </li>
+
+
+            </ul>
+
+        </div>
+
+
+        <button
+            class="logout-btn"
+            id="logoutBtn"
+        >
+
+            Logout
+
+        </button>
+
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             NAVBAR
+        ================================================== -->
+
+        <nav class="navbar">
+
+
+            <div class="logo">
+
+                <a
+                    href="dashboard.html"
+                    style="
+                        text-decoration:none;
+                        color:inherit;
+                    "
+                >
+
+                    <h2>SkillSwap</h2>
+
+                </a>
+
+            </div>
+
+
+            <div class="nav-right">
+
+
+                <!-- Search -->
+
+                <div class="navbar-search">
+
+                    <input
+                        type="text"
+                        id="navbarSkillSearch"
+                        placeholder="Search Skills..."
+                        class="search-input"
+                    >
+
+                </div>
+
+
+                <!-- Notification -->
+
+                <div class="notification-wrapper">
+
+                    <button
+                        class="icon-btn"
+                        id="notificationBtn"
+                    >
+
+                        🔔
+
+                    </button>
+
+
+                    <div
+                        class="notification-dropdown"
+                        id="notificationDropdown"
+                    >
+
+                        <h4>
+                            Notifications
+                        </h4>
+
+
+                        <div id="notificationContainer">
+
+                            <div class="notification-item">
+
+                                No new notifications
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Theme -->
+
+                <button
+                    class="icon-btn"
+                    id="themeToggle"
+                >
+
+                    🌙
+
+                </button>
+
+
+                <!-- Profile -->
+
+                <div class="profile-box">
+
+                    <span id="username">
+                        Prince
+                    </span>
+
+
+                    <div
+                        class="avatar"
+                        id="userAvatar"
+                    >
+
+                        P
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </nav>
+
+
+
+        <!-- =================================================
+             PAGE HEADER
+        ================================================== -->
+
+        <section class="page-header requests-page-header">
+
+            <div>
+
+                <h1>
+                    Exchange Requests
+                </h1>
+
+                <p>
+                    Manage your skill exchange requests.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             REQUEST TABS
+        ================================================== -->
+
+        <section class="requests-section">
+
+
+            <div class="request-tabs">
+
+
+                <button
+                    id="incomingBtn"
+                    class="request-tab active"
+                >
+
+                    Incoming Requests
+
+                </button>
+
+
+                <button
+                    id="sentBtn"
+                    class="request-tab"
+                >
+
+                    Sent Requests
+
+                </button>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 REQUEST CONTAINER
+            ================================================== -->
+
+            <div
+                id="requestsContainer"
+                class="requests-container"
+            >
+
+                <div class="requests-loading">
+
+                    Loading requests...
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+
+<script src="js/requests.js"></script>
+
+
+</body>
+
+</html>

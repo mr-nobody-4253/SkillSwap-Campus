@@ -1,0 +1,934 @@
+/* =========================================================
+   SKILLSWAP CAMPUS
+   REQUESTS PAGE
+========================================================= */
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.requests-page-header {
+
+    margin-top: 35px;
+
+    margin-bottom: 25px;
+
+}
+
+
+.requests-page-header h1 {
+
+    font-size: 30px;
+
+    font-weight: 600;
+
+    margin: 0;
+
+}
+
+
+.requests-page-header p {
+
+    margin-top: 8px;
+
+    color: #777;
+
+    font-size: 14px;
+
+}
+
+
+/* =========================================================
+   REQUEST SECTION
+========================================================= */
+
+.requests-section {
+
+    width: 100%;
+
+    background: #ffffff;
+
+    padding: 30px;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 10px 30px
+        rgba(0, 0, 0, 0.05);
+
+}
+
+
+/* =========================================================
+   TABS
+========================================================= */
+
+.request-tabs {
+
+    display: flex;
+
+    gap: 10px;
+
+    border-bottom:
+        1px solid #eeeeee;
+
+    padding-bottom: 15px;
+
+    margin-bottom: 25px;
+
+}
+
+
+.request-tab {
+
+    padding: 12px 20px;
+
+    border-radius: 12px;
+
+    background: #f3f4f6;
+
+    color: #555;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+}
+
+
+.request-tab:hover {
+
+    background: #e8f8f5;
+
+    color: #1abc9c;
+
+}
+
+
+.request-tab.active {
+
+    background: #1abc9c;
+
+    color: white;
+
+    box-shadow:
+        0 6px 15px
+        rgba(26, 188, 156, 0.2);
+
+}
+
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.request-section-title {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+    margin-bottom: 25px;
+
+}
+
+
+.request-section-title h2 {
+
+    margin: 0;
+
+    font-size: 21px;
+
+    font-weight: 600;
+
+}
+
+
+.request-section-title p {
+
+    margin-top: 5px;
+
+    color: #888;
+
+    font-size: 13px;
+
+}
+
+
+.request-count {
+
+    min-width: 42px;
+
+    height: 42px;
+
+    padding: 0 12px;
+
+    border-radius: 12px;
+
+    background: #eafaf7;
+
+    color: #1abc9c;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+}
+
+
+/* =========================================================
+   REQUEST CONTAINER
+========================================================= */
+
+.requests-container {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+
+}
+
+
+/* =========================================================
+   REQUEST CARD
+========================================================= */
+
+.request-card {
+
+    background: #ffffff;
+
+    border:
+        1px solid #e8e8e8;
+
+    border-radius: 16px;
+
+    padding: 22px;
+
+    transition: .3s;
+
+}
+
+
+.request-card:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 10px 25px
+        rgba(0, 0, 0, 0.07);
+
+}
+
+
+/* =========================================================
+   REQUEST CARD HEADER
+========================================================= */
+
+.request-card-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 18px;
+
+}
+
+
+.request-user {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+
+
+.request-avatar {
+
+    width: 46px;
+
+    height: 46px;
+
+    border-radius: 50%;
+
+    background: #1abc9c;
+
+    color: white;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 17px;
+
+    font-weight: 600;
+
+}
+
+
+.request-user-info h3 {
+
+    margin: 0;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+}
+
+
+.request-user-info span {
+
+    display: block;
+
+    margin-top: 3px;
+
+    color: #999;
+
+    font-size: 11px;
+
+}
+
+
+/* =========================================================
+   SKILLS
+========================================================= */
+
+.request-skills {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        50px
+        1fr;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.request-skill-box {
+
+    padding: 15px;
+
+    border-radius: 12px;
+
+    background: #f8fafa;
+
+    border:
+        1px solid #eeeeee;
+
+}
+
+
+.request-skill-box.offered {
+
+    border-left:
+        4px solid #1abc9c;
+
+}
+
+
+.request-skill-box.requested {
+
+    border-left:
+        4px solid #3498db;
+
+}
+
+
+.skill-label {
+
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    color: #999;
+
+    letter-spacing: .5px;
+
+}
+
+
+.request-skill-box strong {
+
+    font-size: 14px;
+
+    color: #333;
+
+}
+
+
+.request-arrow {
+
+    width: 40px;
+
+    height: 40px;
+
+    border-radius: 50%;
+
+    background: #eafaf7;
+
+    color: #1abc9c;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 18px;
+
+    margin: auto;
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.request-status-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding-top: 15px;
+
+    border-top:
+        1px solid #eeeeee;
+
+}
+
+
+.status-label {
+
+    color: #777;
+
+    font-size: 13px;
+
+}
+
+
+.status-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 7px 12px;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+}
+
+
+/* Pending */
+
+.status-pending {
+
+    background: #fff5d6;
+
+    color: #b7791f;
+
+}
+
+
+/* Accepted */
+
+.status-accepted {
+
+    background: #e8f8f5;
+
+    color: #138a73;
+
+}
+
+
+/* Rejected */
+
+.status-rejected {
+
+    background: #fdeaea;
+
+    color: #c0392b;
+
+}
+
+
+/* Completed */
+
+.status-completed {
+
+    background: #e8f0ff;
+
+    color: #3867d6;
+
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+.request-actions {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 18px;
+
+}
+
+
+.request-actions button {
+
+    flex: 1;
+
+    padding: 11px 15px;
+
+    border-radius: 10px;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+}
+
+
+/* Accept */
+
+.accept-btn {
+
+    background: #1abc9c;
+
+    color: white;
+
+}
+
+
+.accept-btn:hover {
+
+    background: #16a085;
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+/* Reject */
+
+.reject-btn {
+
+    background: #fdeaea;
+
+    color: #c0392b;
+
+}
+
+
+.reject-btn:hover {
+
+    background: #f8d7d7;
+
+}
+
+
+/* Complete */
+
+.complete-btn {
+
+    width: 100%;
+
+    margin-top: 18px;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    background: #3498db;
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+}
+
+
+.complete-btn:hover {
+
+    background: #2980b9;
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+/* =========================================================
+   COMPLETED MESSAGE
+========================================================= */
+
+.completed-message {
+
+    margin-top: 18px;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    background: #f1f6ff;
+
+    color: #3867d6;
+
+    text-align: center;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+}
+
+
+/* =========================================================
+   LOADING / EMPTY
+========================================================= */
+
+.requests-loading {
+
+    padding: 50px 20px;
+
+    text-align: center;
+
+    color: #888;
+
+}
+
+
+.requests-empty {
+
+    padding: 60px 20px;
+
+    text-align: center;
+
+}
+
+
+.requests-empty-icon {
+
+    font-size: 45px;
+
+    margin-bottom: 15px;
+
+}
+
+
+.requests-empty h3 {
+
+    margin: 0;
+
+    font-size: 18px;
+
+}
+
+
+.requests-empty p {
+
+    margin-top: 8px;
+
+    color: #888;
+
+    font-size: 13px;
+
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+.dark-mode .requests-page-header {
+
+    color: white;
+
+}
+
+
+.dark-mode .requests-page-header p {
+
+    color: #aaa;
+
+}
+
+
+.dark-mode .requests-section {
+
+    background: #1e1e1e;
+
+    color: white;
+
+}
+
+
+.dark-mode .request-tabs {
+
+    border-color: #333;
+
+}
+
+
+.dark-mode .request-tab {
+
+    background: #2a2a2a;
+
+    color: #ccc;
+
+}
+
+
+.dark-mode .request-tab:hover {
+
+    background: #333;
+
+    color: #1abc9c;
+
+}
+
+
+.dark-mode .request-tab.active {
+
+    background: #1abc9c;
+
+    color: white;
+
+}
+
+
+.dark-mode .request-section-title p {
+
+    color: #aaa;
+
+}
+
+
+.dark-mode .request-count {
+
+    background: #183b35;
+
+    color: #1abc9c;
+
+}
+
+
+.dark-mode .request-card {
+
+    background: #1e1e1e;
+
+    border-color: #3a3a3a;
+
+    color: white;
+
+}
+
+
+.dark-mode .request-card:hover {
+
+    box-shadow:
+        0 10px 25px
+        rgba(0, 0, 0, .3);
+
+}
+
+
+.dark-mode .request-skill-box {
+
+    background: #2a2a2a;
+
+    border-color: #3a3a3a;
+
+}
+
+
+.dark-mode .request-skill-box strong {
+
+    color: white;
+
+}
+
+
+.dark-mode .request-status-row {
+
+    border-color: #3a3a3a;
+
+}
+
+
+.dark-mode .status-label {
+
+    color: #aaa;
+
+}
+
+
+.dark-mode .completed-message {
+
+    background: #202b3d;
+
+    color: #7da5ff;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 768px) {
+
+
+    .requests-section {
+
+        padding: 20px;
+
+    }
+
+
+    .request-tabs {
+
+        flex-direction: column;
+
+    }
+
+
+    .request-tab {
+
+        width: 100%;
+
+    }
+
+
+    .request-section-title {
+
+        align-items: flex-start;
+
+    }
+
+
+    .request-skills {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .request-arrow {
+
+        transform:
+            rotate(90deg);
+
+    }
+
+
+}
+
+
+@media (max-width: 480px) {
+
+
+    .requests-page-header h1 {
+
+        font-size: 24px;
+
+    }
+
+
+    .requests-section {
+
+        padding: 15px;
+
+    }
+
+
+    .request-card {
+
+        padding: 17px;
+
+    }
+
+
+    .request-card-header {
+
+        align-items: flex-start;
+
+    }
+
+
+    .request-status-row {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+
+    .request-actions {
+
+        flex-direction: column;
+
+    }
+
+}

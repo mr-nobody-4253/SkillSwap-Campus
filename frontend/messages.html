@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Messages | SkillSwap Campus</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <div class="dashboard-layout">
+      <!-- =================================================
+         SIDEBAR
+    ================================================== -->
+
+      <aside class="sidebar">
+        <div>
+          <!-- LOGO -->
+
+          <div class="sidebar-logo">
+            <h2>SkillSwap</h2>
+
+            <p>Campus</p>
+          </div>
+
+          <!-- MENU -->
+
+          <ul class="sidebar-menu">
+            <li>
+              <a href="dashboard.html">
+                🏠
+
+                <span> Dashboard </span>
+              </a>
+            </li>
+
+            <li>
+              <a href="profile.html">
+                👤
+
+                <span> Profile </span>
+              </a>
+            </li>
+
+            <li>
+              <a href="skills.html">
+                💡
+
+                <span> Skills </span>
+              </a>
+            </li>
+
+            <li>
+              <a href="requests.html">
+                🔄
+
+                <span> Requests </span>
+              </a>
+            </li>
+
+            <!-- ACTIVE -->
+
+            <li class="active">
+              <a href="messages.html">
+                💬
+
+                <span> Messages </span>
+              </a>
+            </li>
+
+            <li>
+              <a href="notifications.html">
+                🔔
+
+                <span> Notifications </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- LOGOUT -->
+
+        <button class="logout-btn" id="logoutBtn">Logout</button>
+      </aside>
+
+      <!-- =================================================
+         MAIN CONTENT
+    ================================================== -->
+
+      <main class="main-content">
+        <!-- =================================================
+             NAVBAR
+        ================================================== -->
+
+        <nav class="navbar">
+          <div class="logo">
+            <a
+              href="dashboard.html"
+              style="text-decoration: none; color: inherit"
+            >
+              <h2>SkillSwap</h2>
+            </a>
+          </div>
+
+          <div class="nav-right">
+            <!-- SEARCH -->
+
+            <div class="navbar-search">
+              <input
+                type="text"
+                id="navbarSkillSearch"
+                placeholder="Search Skills..."
+                class="search-input"
+              />
+            </div>
+
+            <!-- NOTIFICATION -->
+
+            <div class="notification-wrapper">
+              <button class="icon-btn" id="notificationBtn">🔔</button>
+
+              <div class="notification-dropdown" id="notificationDropdown">
+                <h4>Notifications</h4>
+
+                <div id="notificationContainer">
+                  <div class="notification-item">No new notifications.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- THEME -->
+
+            <button class="icon-btn" id="themeToggle">🌙</button>
+
+            <!-- PROFILE -->
+
+            <div class="profile-box">
+              <span id="username"> User </span>
+
+              <div class="avatar" id="userAvatar">U</div>
+            </div>
+          </div>
+        </nav>
+
+        <!-- =================================================
+             MESSAGES HEADER
+        ================================================== -->
+
+        <section class="page-header">
+          <div>
+            <h1>Messages</h1>
+
+            <p>Chat with your skill exchange partners.</p>
+          </div>
+        </section>
+
+        <!-- =================================================
+             MESSAGES AREA
+        ================================================== -->
+
+        <section class="messages-section">
+          <!-- =================================================
+                 CHAT LIST
+            ================================================== -->
+
+          <div class="chat-list">
+            <div class="chat-list-header">
+              <h2>Chats</h2>
+            </div>
+
+            <!-- IMPORTANT:
+                     messages.js dynamically creates
+                     the chat items here.
+                -->
+
+            <div id="chatList" class="chat-list-container">
+              <div class="chat-loading">Loading chats...</div>
+            </div>
+          </div>
+
+          <!-- =================================================
+                 CHAT WINDOW
+            ================================================== -->
+
+          <div class="chat-window">
+            <!-- =================================================
+                     EMPTY STATE
+                ================================================== -->
+
+            <div id="emptyChat" class="empty-chat">
+              <div class="empty-chat-icon">💬</div>
+
+              <h2>Select a conversation</h2>
+
+              <p>Choose someone from your chats to start messaging.</p>
+            </div>
+
+            <!-- =================================================
+                     ACTIVE CHAT
+                ================================================== -->
+
+            <div id="activeChat" class="active-chat" style="display: none">
+              <!-- =================================================
+                         CHAT HEADER
+                    ================================================== -->
+
+              <div class="chat-header">
+                <div class="chat-user">
+                  <div class="chat-avatar" id="chatAvatar">U</div>
+
+                  <div>
+                    <h3 id="chatUserName">User</h3>
+
+                    <span id="chatUserEmail"> - </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- =================================================
+                         MESSAGES
+                    ================================================== -->
+
+              <div id="messagesContainer" class="messages-container">
+                <div class="chat-loading">Loading messages...</div>
+              </div>
+
+              <!-- =================================================
+                         MESSAGE INPUT
+                    ================================================== -->
+
+              <div class="message-input-area">
+                <input
+                  type="text"
+                  id="messageInput"
+                  placeholder="Type a message..."
+                  autocomplete="off"
+                />
+
+                <button id="sendMessageBtn" type="button">➤</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- =================================================
+     JAVASCRIPT
+================================================== -->
+
+    <script src="js/messages.js"></script>
+  </body>
+</html>
