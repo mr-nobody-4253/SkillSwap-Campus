@@ -6,7 +6,7 @@
 const db = require("../config/db");
 
 // =====================================================
-// GET ALL NOTIFICATIONS
+// GET NOTIFICATIONS
 // =====================================================
 
 const getNotifications = (req, res) => {
@@ -16,7 +16,6 @@ const getNotifications = (req, res) => {
         SELECT
             id,
             user_id,
-            type,
             title,
             message,
             is_read,
@@ -36,17 +35,14 @@ const getNotifications = (req, res) => {
       });
     }
 
-    const unreadCount = result.filter(
-      (notification) =>
-        notification.is_read === 0 || notification.is_read === false,
-    ).length;
-
     res.status(200).json({
       success: true,
 
       total_notifications: result.length,
 
-      unread_notifications: unreadCount,
+      unread_notifications: result.filter(
+        (notification) => !notification.is_read,
+      ).length,
 
       data: result,
     });
@@ -75,6 +71,7 @@ const markAsRead = (req, res) => {
 
       return res.status(500).json({
         success: false,
+
         message: "Database Error",
       });
     }
@@ -82,6 +79,7 @@ const markAsRead = (req, res) => {
     if (result.affectedRows === 0) {
       return res.status(404).json({
         success: false,
+
         message: "Notification not found",
       });
     }
@@ -114,6 +112,7 @@ const markAllAsRead = (req, res) => {
 
       return res.status(500).json({
         success: false,
+
         message: "Database Error",
       });
     }
@@ -123,7 +122,7 @@ const markAllAsRead = (req, res) => {
 
       message: "All notifications marked as read.",
 
-      affected_rows: result.affectedRows,
+      updated: result.affectedRows,
     });
   });
 };

@@ -7,10 +7,6 @@ const express = require("express");
 
 const router = express.Router();
 
-// =====================================================
-// CONTROLLER
-// =====================================================
-
 const {
   getNotifications,
 
@@ -19,35 +15,24 @@ const {
   markAllAsRead,
 } = require("../controllers/notificationController");
 
-// =====================================================
-// AUTH MIDDLEWARE
-// =====================================================
-
 const authMiddleware = require("../middleware/authMiddleware");
 
 // =====================================================
-// GET NOTIFICATIONS
-// GET /api/notifications
+// GET ALL NOTIFICATIONS
 // =====================================================
 
 router.get("/", authMiddleware, getNotifications);
 
 // =====================================================
-// MARK SINGLE AS READ
-// PUT /api/notifications/read/:id
-// =====================================================
-
-router.put("/read/:id", authMiddleware, markAsRead);
-
-// =====================================================
 // MARK ALL AS READ
-// PUT /api/notifications/read-all
 // =====================================================
 
 router.put("/read-all", authMiddleware, markAllAsRead);
 
 // =====================================================
-// EXPORT
+// MARK SINGLE AS READ
 // =====================================================
+
+router.put("/read/:id", authMiddleware, markAsRead);
 
 module.exports = router;
