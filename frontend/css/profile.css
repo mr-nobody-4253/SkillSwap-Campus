@@ -875,3 +875,12 @@ body.dark-mode .cancel-delete-btn {
     padding: 22px;
   }
 }
+
+/* =====================================================
+   DARK MODE - PROFILE SECTION HEADINGS
+===================================================== */
+
+body.dark-mode .profile-section .section-header h2,
+body.dark-mode .my-posts-section .section-header h2 {
+    color: #ffffff;
+}

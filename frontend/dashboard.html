@@ -129,10 +129,44 @@
               </button>
 
               <div class="notification-dropdown" id="notificationDropdown">
-                <h4>Notifications</h4>
+                <!-- =========================================
+         NOTIFICATION HEADER
+    ========================================== -->
 
-                <div id="notificationContainer">
-                  <div class="notification-item">Loading...</div>
+                <div class="notification-popup-header">
+                  <div>
+                    <h4>Notifications</h4>
+
+                    <span id="notificationUnreadText">
+                      Latest notifications
+                    </span>
+                  </div>
+
+                  <button
+                    type="button"
+                    class="popup-mark-read-btn"
+                    id="popupMarkAllReadBtn"
+                  >
+                    Mark all as read
+                  </button>
+                </div>
+
+                <!-- =========================================
+         NOTIFICATION LIST
+    ========================================== -->
+
+                <div id="notificationContainer" class="notification-popup-list">
+                  <div class="notification-popup-loading">
+                    Loading notifications...
+                  </div>
+                </div>
+
+                <!-- =========================================
+         FOOTER
+    ========================================== -->
+
+                <div class="notification-popup-footer">
+                  <a href="notifications.html"> View all notifications → </a>
                 </div>
               </div>
             </div>

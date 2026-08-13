@@ -831,6 +831,18 @@
 
 }
 
+/* =====================================================
+   REQUESTS EMPTY STATE - DARK MODE FIX
+===================================================== */
+
+body.dark-mode .requests-empty h3 {
+    color: #ffffff;
+}
+
+body.dark-mode .requests-empty p {
+    color: #aaaaaa;
+}
+
 
 /* =========================================================
    RESPONSIVE

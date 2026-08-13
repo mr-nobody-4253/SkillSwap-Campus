@@ -24,7 +24,7 @@
     >
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet"
     >
 
@@ -33,13 +33,604 @@
         href="css/style.css"
     >
 
+    <style>
+
+        /* =====================================================
+           REQUESTS PAGE
+        ===================================================== */
+
+        .requests-page-header {
+            margin-bottom: 25px;
+        }
+
+
+        /* =====================================================
+           REQUESTS SECTION
+        ===================================================== */
+
+        .requests-section {
+            margin-top: 20px;
+        }
+
+
+        /* =====================================================
+           REQUEST TABS
+        ===================================================== */
+
+        .request-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+
+        .request-tab {
+            border: none;
+            background: #eeeeee;
+            color: #444444;
+
+            padding: 12px 20px;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+
+        .request-tab:hover {
+            transform: translateY(-1px);
+        }
+
+
+        .request-tab.active {
+            background: #6c63ff;
+            color: white;
+        }
+
+
+        /* =====================================================
+           REQUEST CONTAINER
+        ===================================================== */
+
+        .requests-container {
+            width: 100%;
+        }
+
+
+        /* =====================================================
+           LOADING
+        ===================================================== */
+
+        .requests-loading {
+            text-align: center;
+
+            padding: 60px 20px;
+
+            color: #777777;
+
+            font-size: 15px;
+        }
+
+
+        /* =====================================================
+           EMPTY STATE
+        ===================================================== */
+
+        .requests-empty {
+            background: #ffffff;
+
+            border-radius: 18px;
+
+            padding: 60px 20px;
+
+            text-align: center;
+
+            box-shadow:
+                0 8px 25px rgba(0, 0, 0, 0.06);
+        }
+
+
+        .requests-empty h3 {
+            margin: 0 0 10px;
+
+            color: #333333;
+
+            font-size: 20px;
+
+            font-weight: 600;
+        }
+
+
+        .requests-empty p {
+            margin: 0;
+
+            color: #777777;
+
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           REQUEST CARD
+        ===================================================== */
+
+        .request-card {
+            background: #ffffff;
+
+            border-radius: 18px;
+
+            padding: 24px;
+
+            margin-bottom: 20px;
+
+            box-shadow:
+                0 8px 25px rgba(0, 0, 0, 0.06);
+
+            transition: 0.2s;
+        }
+
+
+        .request-card:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 30px rgba(0, 0, 0, 0.08);
+        }
+
+
+        /* =====================================================
+           REQUEST HEADER
+        ===================================================== */
+
+        .request-card-header {
+            margin-bottom: 20px;
+        }
+
+
+        .request-user {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+
+        .request-avatar {
+            width: 45px;
+            height: 45px;
+
+            border-radius: 50%;
+
+            background: #6c63ff;
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+
+        .request-user-info h3 {
+            margin: 0 0 3px;
+
+            font-size: 16px;
+
+            color: #333333;
+        }
+
+
+        .request-user-info span {
+            font-size: 12px;
+
+            color: #888888;
+        }
+
+
+        /* =====================================================
+           REQUEST SKILLS
+        ===================================================== */
+
+        .request-skills {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 15px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .request-skill-box {
+            flex: 1;
+
+            min-height: 80px;
+
+            padding: 15px;
+
+            background: #f8f8ff;
+
+            border: 1px solid #e8e6ff;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            text-align: center;
+        }
+
+
+        .skill-label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: #777777;
+
+            font-size: 12px;
+
+            font-weight: 500;
+        }
+
+
+        .request-skill-box strong {
+            color: #333333;
+
+            font-size: 15px;
+
+            word-break: break-word;
+        }
+
+
+        .request-exchange-icon {
+            font-size: 24px;
+
+            color: #6c63ff;
+
+            font-weight: 600;
+        }
+
+
+        /* =====================================================
+           STATUS
+        ===================================================== */
+
+        .request-status-row {
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .request-status-label {
+            color: #777777;
+
+            font-size: 13px;
+
+            font-weight: 500;
+        }
+
+
+        .status-badge {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 6px 12px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+
+        .status-pending {
+            background: #fff4cc;
+
+            color: #9a7500;
+        }
+
+
+        .status-accepted {
+            background: #dff7e5;
+
+            color: #20843c;
+        }
+
+
+        .status-rejected {
+            background: #ffe5e5;
+
+            color: #d93025;
+        }
+
+
+        .status-completed {
+            background: #e5e1ff;
+
+            color: #5b50d6;
+        }
+
+
+        /* =====================================================
+           ACTION BUTTONS
+        ===================================================== */
+
+        .request-actions {
+            display: flex;
+
+            gap: 10px;
+        }
+
+
+        .accept-btn,
+        .reject-btn,
+        .complete-btn {
+            border: none;
+
+            padding: 10px 16px;
+
+            border-radius: 9px;
+
+            cursor: pointer;
+
+            font-family: inherit;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+
+        .accept-btn {
+            background: #dff7e5;
+
+            color: #20843c;
+        }
+
+
+        .accept-btn:hover {
+            background: #20843c;
+
+            color: white;
+        }
+
+
+        .reject-btn {
+            background: #ffe5e5;
+
+            color: #d93025;
+        }
+
+
+        .reject-btn:hover {
+            background: #d93025;
+
+            color: white;
+        }
+
+
+        .complete-btn {
+            background: #6c63ff;
+
+            color: white;
+        }
+
+
+        .complete-btn:hover {
+            opacity: 0.9;
+
+            transform: translateY(-1px);
+        }
+
+
+        .request-completed-message {
+            padding: 11px 15px;
+
+            border-radius: 9px;
+
+            background: #dff7e5;
+
+            color: #20843c;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            text-align: center;
+        }
+
+
+        /* =====================================================
+           DARK MODE
+        ===================================================== */
+
+        body.dark-mode .request-tab:not(.active) {
+            background: #292929;
+
+            color: #dddddd;
+        }
+
+
+        body.dark-mode .requests-empty {
+            background: #1f1f1f;
+
+            color: white;
+        }
+
+
+        /* FIX:
+           Empty-state title was remaining black
+           in dark mode.
+        */
+
+        body.dark-mode .requests-empty h3 {
+            color: #ffffff;
+        }
+
+
+        /* FIX:
+           Empty-state description was remaining dark
+           in dark mode.
+        */
+
+        body.dark-mode .requests-empty p {
+            color: #aaaaaa;
+        }
+
+
+        body.dark-mode .request-card {
+            background: #1f1f1f;
+
+            color: white;
+        }
+
+
+        body.dark-mode .request-user-info h3 {
+            color: #ffffff;
+        }
+
+
+        body.dark-mode .request-user-info span {
+            color: #aaaaaa;
+        }
+
+
+        body.dark-mode .request-skill-box {
+            background: #292929;
+
+            border-color: #3a3a3a;
+        }
+
+
+        body.dark-mode .skill-label {
+            color: #aaaaaa;
+        }
+
+
+        body.dark-mode .request-skill-box strong {
+            color: #ffffff;
+        }
+
+
+        body.dark-mode .request-status-label {
+            color: #aaaaaa;
+        }
+
+
+        body.dark-mode .requests-loading {
+            color: #aaaaaa;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 700px) {
+
+            .request-tabs {
+                width: 100%;
+            }
+
+
+            .request-tab {
+                flex: 1;
+
+                padding: 11px 10px;
+
+                font-size: 13px;
+            }
+
+
+            .request-skills {
+                flex-direction: column;
+
+                gap: 10px;
+            }
+
+
+            .request-skill-box {
+                width: 100%;
+
+                box-sizing: border-box;
+            }
+
+
+            .request-exchange-icon {
+                transform: rotate(90deg);
+            }
+
+
+            .request-actions {
+                flex-direction: column;
+            }
+
+
+            .accept-btn,
+            .reject-btn,
+            .complete-btn {
+                width: 100%;
+            }
+
+
+            .request-status-row {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+        }
+
+
+        @media (max-width: 450px) {
+
+            .request-card {
+                padding: 18px;
+            }
+
+
+            .request-tab {
+                font-size: 12px;
+
+                padding: 10px 8px;
+            }
+
+        }
+
+    </style>
+
 </head>
 
 
 <body>
-
-
-<div class="dashboard-layout">
 
 
     <!-- =====================================================
@@ -89,8 +680,6 @@
 
                 </li>
 
-
-                <!-- ACTIVE -->
 
                 <li class="active">
 
@@ -172,7 +761,7 @@
             <div class="nav-right">
 
 
-                <!-- Search -->
+                <!-- SEARCH -->
 
                 <div class="navbar-search">
 
@@ -186,7 +775,7 @@
                 </div>
 
 
-                <!-- Notification -->
+                <!-- NOTIFICATION -->
 
                 <div class="notification-wrapper">
 
@@ -225,7 +814,7 @@
                 </div>
 
 
-                <!-- Theme -->
+                <!-- THEME -->
 
                 <button
                     class="icon-btn"
@@ -237,7 +826,7 @@
                 </button>
 
 
-                <!-- Profile -->
+                <!-- PROFILE -->
 
                 <div class="profile-box">
 
@@ -344,12 +933,11 @@
     </main>
 
 
-</div>
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
 
-
-
-<script src="js/requests.js"></script>
-
+    <script src="js/requests.js"></script>
 
 </body>
 

@@ -3055,3 +3055,1087 @@ textarea {
         width: 100%;
     }
 }
+
+/* =========================================================
+   REQUEST EXCHANGE BUTTON
+========================================================= */
+
+.request-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 10px 18px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #4f46e5;
+    color: #ffffff;
+
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.request-btn:hover {
+    background: #4338ca;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.25);
+}
+
+.request-btn:active {
+    transform: translateY(0);
+
+    box-shadow: none;
+}
+
+.request-btn:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+.dark-mode .request-btn {
+    background: #6366f1;
+
+    color: #ffffff;
+}
+
+.dark-mode .request-btn:hover {
+    background: #818cf8;
+
+    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.25);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .request-btn {
+        width: 100%;
+
+        padding: 11px 16px;
+
+        font-size: 13px;
+    }
+
+}
+
+/* =====================================================
+   NOTIFICATION BADGE
+===================================================== */
+
+.notification-badge {
+    position: absolute;
+
+    top: -4px;
+    right: -4px;
+
+    min-width: 18px;
+    height: 18px;
+
+    padding: 0 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #ef4444;
+
+    color: white;
+
+    border-radius: 50%;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    line-height: 1;
+
+    border: 2px solid white;
+
+    pointer-events: none;
+}
+
+
+/* =====================================================
+   NOTIFICATION ITEMS
+===================================================== */
+
+.notification-item {
+    padding: 12px 14px;
+
+    border-bottom: 1px solid #eee;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease;
+}
+
+
+.notification-item:hover {
+    background: #f5f7f7;
+}
+
+
+.notification-unread {
+    background: #f0fdfa;
+}
+
+
+.notification-read {
+    background: transparent;
+
+    opacity: 0.75;
+}
+
+
+.notification-content strong {
+    display: block;
+
+    margin-bottom: 4px;
+
+    font-size: 13px;
+}
+
+
+.notification-content p {
+    margin: 0;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+    color: #666;
+}
+
+
+.notification-time {
+    display: block;
+
+    margin-top: 6px;
+
+    font-size: 10px;
+
+    color: #999;
+}
+
+
+/* =====================================================
+   DARK MODE
+===================================================== */
+
+.dark-mode .notification-item {
+    border-bottom-color: #333;
+}
+
+
+.dark-mode .notification-item:hover {
+    background: #2a2a2a;
+}
+
+
+.dark-mode .notification-unread {
+    background: #193b37;
+}
+
+
+.dark-mode .notification-content strong {
+    color: #fff;
+}
+
+
+.dark-mode .notification-content p {
+    color: #bbb;
+}
+
+
+.dark-mode .notification-time {
+    color: #888;
+}
+
+
+.dark-mode .notification-badge {
+    border-color: #1e1e1e;
+}
+
+/* =========================================================
+   DASHBOARD NOTIFICATION POPUP
+========================================================= */
+
+/* Main popup */
+.notification-dropdown {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+
+    width: 390px;
+    max-width: calc(100vw - 30px);
+
+    background: #ffffff;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.15);
+
+    border: 1px solid #eeeeee;
+
+    overflow: hidden;
+
+    z-index: 9999;
+}
+
+
+/* Popup Header */
+.notification-dropdown > h4 {
+    margin: 0;
+
+    padding: 18px 18px 6px;
+
+    font-size: 17px;
+    font-weight: 600;
+
+    color: #1f2937;
+}
+
+
+/* Subtitle under Notifications */
+.notification-dropdown::before {
+    content: "Latest notifications";
+
+    display: block;
+
+    margin: -2px 18px 12px;
+
+    font-size: 12px;
+
+    color: #9ca3af;
+}
+
+
+/* Notification container */
+#notificationContainer {
+    max-height: 410px;
+
+    overflow-y: auto;
+
+    overflow-x: hidden;
+
+    border-top: 1px solid #f0f0f0;
+}
+
+
+/* Custom scrollbar */
+#notificationContainer::-webkit-scrollbar {
+    width: 7px;
+}
+
+#notificationContainer::-webkit-scrollbar-track {
+    background: #f5f5f5;
+}
+
+#notificationContainer::-webkit-scrollbar-thumb {
+    background: #bdbdbd;
+
+    border-radius: 10px;
+}
+
+#notificationContainer::-webkit-scrollbar-thumb:hover {
+    background: #999999;
+}
+
+
+/* =========================================================
+   INDIVIDUAL NOTIFICATION
+========================================================= */
+
+.notification-dropdown .dashboard-notification-item {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    width: 100%;
+
+    padding: 14px 16px;
+
+    box-sizing: border-box;
+
+    border-bottom: 1px solid #f1f1f1;
+
+    background: #ffffff;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+/* Hover */
+.notification-dropdown .dashboard-notification-item:hover {
+    background: #f8fafc;
+}
+
+
+/* Last notification */
+.notification-dropdown
+.dashboard-notification-item:last-child {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   NOTIFICATION ICON
+========================================================= */
+
+.notification-dropdown .dashboard-notification-icon {
+
+    width: 38px;
+    height: 38px;
+
+    min-width: 38px;
+
+    border-radius: 10px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #eaf7f3;
+
+    font-size: 18px;
+
+    line-height: 1;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   NOTIFICATION CONTENT
+========================================================= */
+
+.notification-dropdown
+.dashboard-notification-content {
+
+    flex: 1;
+
+    min-width: 0;
+}
+
+
+/* Top row */
+.notification-dropdown
+.dashboard-notification-top {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 8px;
+
+    margin-bottom: 3px;
+}
+
+
+/* Notification title */
+.notification-dropdown
+.dashboard-notification-content strong {
+
+    display: block;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    line-height: 1.35;
+
+    color: #1f2937;
+}
+
+
+/* Notification message */
+.notification-dropdown
+.dashboard-notification-content p {
+
+    margin: 3px 0 5px;
+
+    font-size: 13px;
+
+    line-height: 1.45;
+
+    color: #6b7280;
+
+    word-break: break-word;
+}
+
+
+/* Time */
+.notification-dropdown
+.dashboard-notification-time {
+
+    display: block;
+
+    font-size: 11px;
+
+    color: #9ca3af;
+}
+
+
+/* =========================================================
+   UNREAD NOTIFICATION
+========================================================= */
+
+.notification-dropdown
+.dashboard-notification-item.unread {
+
+    background: #f4fbf8;
+}
+
+
+.notification-dropdown
+.dashboard-notification-item.unread:hover {
+
+    background: #edf8f4;
+}
+
+
+/* Unread dot */
+.notification-dropdown
+.notification-unread-dot {
+
+    width: 7px;
+    height: 7px;
+
+    min-width: 7px;
+
+    border-radius: 50%;
+
+    background: #16a085;
+
+    margin-top: 5px;
+}
+
+
+/* =========================================================
+   POPUP FOOTER
+========================================================= */
+
+.notification-popup-footer {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    padding: 12px 16px;
+
+    background: #fafafa;
+
+    border-top: 1px solid #eeeeee;
+}
+
+
+/* Mark all as read */
+.popup-mark-all-btn {
+
+    border: none;
+
+    background: transparent;
+
+    color: #168f6b;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    padding: 5px 0;
+
+    transition: color 0.2s ease;
+}
+
+
+.popup-mark-all-btn:hover {
+
+    color: #0f6f54;
+
+    text-decoration: underline;
+}
+
+
+/* View all */
+.view-all-notifications {
+
+    color: #168f6b;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    transition: color 0.2s ease;
+}
+
+
+.view-all-notifications:hover {
+
+    color: #0f6f54;
+
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   EMPTY / LOADING STATE
+========================================================= */
+
+.notification-dropdown
+.notification-loading {
+
+    padding: 30px 20px;
+
+    text-align: center;
+
+    color: #9ca3af;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+.dark-mode .notification-dropdown {
+
+    background: #1f1f1f;
+
+    border-color: #333333;
+
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.45);
+}
+
+
+.dark-mode .notification-dropdown > h4 {
+
+    color: #ffffff;
+}
+
+
+.dark-mode .notification-dropdown::before {
+
+    color: #888888;
+}
+
+
+.dark-mode #notificationContainer {
+
+    border-top-color: #333333;
+}
+
+
+.dark-mode
+.notification-dropdown
+.dashboard-notification-item {
+
+    background: #1f1f1f;
+
+    border-bottom-color: #333333;
+}
+
+
+.dark-mode
+.notification-dropdown
+.dashboard-notification-item:hover {
+
+    background: #292929;
+}
+
+
+.dark-mode
+.notification-dropdown
+.dashboard-notification-item.unread {
+
+    background: #1d302b;
+}
+
+
+.dark-mode
+.notification-dropdown
+.dashboard-notification-item.unread:hover {
+
+    background: #233b35;
+}
+
+
+.dark-mode
+.notification-dropdown
+.dashboard-notification-content strong {
+
+    color: #ffffff;
+}
+
+
+.dark-mode
+.notification-dropdown
+.dashboard-notification-content p {
+
+    color: #b0b0b0;
+}
+
+
+.dark-mode
+.notification-dropdown
+.dashboard-notification-time {
+
+    color: #777777;
+}
+
+
+.dark-mode
+.notification-dropdown
+.dashboard-notification-icon {
+
+    background: #263b38;
+}
+
+
+.dark-mode .notification-popup-footer {
+
+    background: #242424;
+
+    border-top-color: #333333;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .notification-dropdown {
+
+        position: fixed;
+
+        top: 75px;
+
+        right: 15px;
+        left: 15px;
+
+        width: auto;
+
+        max-width: none;
+
+        border-radius: 14px;
+    }
+
+
+    #notificationContainer {
+
+        max-height: 400px;
+    }
+
+
+    .notification-dropdown
+    .dashboard-notification-item {
+
+        padding: 13px 14px;
+
+        gap: 10px;
+    }
+
+
+    .notification-dropdown
+    .dashboard-notification-icon {
+
+        width: 35px;
+        height: 35px;
+
+        min-width: 35px;
+
+        font-size: 16px;
+    }
+
+
+    .notification-dropdown
+    .dashboard-notification-content strong {
+
+        font-size: 13px;
+    }
+
+
+    .notification-dropdown
+    .dashboard-notification-content p {
+
+        font-size: 12px;
+    }
+
+
+    .notification-popup-footer {
+
+        padding: 11px 14px;
+    }
+}
+
+/* =========================================================
+   NOTIFICATION POPUP - FINAL FIX
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   1. TOP MARK ALL AS READ BUTTON
+--------------------------------------------------------- */
+
+.notification-dropdown > .popup-mark-all-btn {
+
+    display: inline-flex !important;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 6px 10px;
+
+    border: none;
+    border-radius: 6px;
+
+    background: #e8f7f1;
+
+    color: #168f6b;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+
+.notification-dropdown > .popup-mark-all-btn:hover {
+
+    background: #d5f0e6;
+
+    color: #0f6f54;
+}
+
+
+/* ---------------------------------------------------------
+   2. REMOVE FOOTER MARK ALL AS READ
+--------------------------------------------------------- */
+
+.notification-dropdown
+.notification-popup-footer
+.popup-mark-all-btn {
+
+    display: none !important;
+}
+
+
+/* ---------------------------------------------------------
+   3. REMOVE ONE OF THE TWO VIEW ALL BUTTONS
+--------------------------------------------------------- */
+
+/*
+   Footer-এর ভিতরের View All button hide হবে.
+*/
+
+.notification-dropdown
+.notification-popup-footer
+.view-all-notifications {
+
+    display: none !important;
+}
+
+
+/*
+   Popup-এর direct View All button থাকবে.
+*/
+
+.notification-dropdown > .view-all-notifications {
+
+    display: flex !important;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 14px 18px;
+
+    background: #fafafa;
+
+    border-top: 1px solid #eeeeee;
+
+    color: #168f6b;
+
+    text-decoration: none;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    transition: all 0.2s ease;
+}
+
+
+.notification-dropdown > .view-all-notifications:hover {
+
+    background: #f1f8f5;
+
+    color: #0f6f54;
+}
+
+/* =====================================================
+   POPUP - MARK ALL AS READ BUTTON
+   ===================================================== */
+
+.popup-mark-all-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  padding: 8px 16px !important;
+
+  background: #e8f7ef !important;
+  color: #16834f !important;
+
+  border: 1px solid #b9e6ce !important;
+  border-radius: 8px !important;
+
+  font-family: "Poppins", sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+
+  cursor: pointer !important;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease !important;
+}
+
+/* Hover */
+.popup-mark-all-btn:hover {
+  background: #16834f !important;
+  color: #ffffff !important;
+  border-color: #16834f !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Click */
+.popup-mark-all-btn:active {
+  transform: translateY(0) !important;
+}
+
+/* Disabled */
+.popup-mark-all-btn:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+}
+
+/* =====================================================
+   DARK MODE
+   ===================================================== */
+
+body.dark-mode .popup-mark-all-btn {
+  background: rgba(22, 131, 79, 0.15) !important;
+  color: #45d892 !important;
+  border-color: rgba(69, 216, 146, 0.3) !important;
+}
+
+body.dark-mode .popup-mark-all-btn:hover {
+  background: #16834f !important;
+  color: #ffffff !important;
+  border-color: #16834f !important;
+}
+
+/* =========================================================
+   DASHBOARD NOTIFICATION POPUP
+   MARK ALL AS READ BUTTON
+========================================================= */
+
+.popup-mark-all-btn {
+    width: 100%;
+
+    padding: 11px 16px;
+
+    margin-bottom: 10px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #1abc9c;
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+
+    box-shadow: 0 4px 10px rgba(26, 188, 156, 0.20);
+}
+
+.popup-mark-all-btn:hover {
+    background: #16a085;
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 6px 14px rgba(26, 188, 156, 0.25);
+}
+
+.popup-mark-all-btn:active {
+    transform: translateY(0);
+}
+
+.popup-mark-all-btn:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   POPUP FOOTER
+========================================================= */
+
+.notification-popup-footer {
+    width: 100%;
+
+    padding-top: 12px;
+
+    margin-top: 8px;
+
+    border-top: 1px solid #eeeeee;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+/* =========================================================
+   VIEW ALL NOTIFICATIONS
+========================================================= */
+
+.view-all-notifications {
+    display: block;
+
+    width: 100%;
+
+    padding: 12px 16px;
+
+    border-radius: 10px;
+
+    background: #1abc9c;
+
+    color: #ffffff !important;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    transition: all 0.2s ease;
+}
+
+.view-all-notifications:hover {
+    background: #16a085;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+.dark-mode .notification-popup-footer {
+    border-top-color: #3a3a3a;
+}
+
+.dark-mode .popup-mark-all-btn {
+    background: #1abc9c;
+
+    color: #ffffff;
+}
+
+.dark-mode .popup-mark-all-btn:hover {
+    background: #16a085;
+}
+
+.dark-mode .view-all-notifications {
+    background: #1abc9c;
+
+    color: #ffffff !important;
+}
+
+.dark-mode .view-all-notifications:hover {
+    background: #16a085;
+}
